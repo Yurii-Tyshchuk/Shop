@@ -11,7 +11,7 @@ import ru.skillsad.sad.domain.catalog.Product;
 import ru.skillsad.sad.repository.ProductRepo;
 
 @Controller
-@RequestMapping("/img")
+@RequestMapping("Catalog/img")
 public class ImgController {
     private final ProductRepo productRepo;
 

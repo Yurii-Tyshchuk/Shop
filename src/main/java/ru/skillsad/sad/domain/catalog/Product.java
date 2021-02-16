@@ -14,11 +14,11 @@ import java.io.Serializable;
 @Data
 public class Product extends BaseEntity implements Serializable {
     @JsonView(View.IdAndName.class)
-    @NotBlank
+    @NotBlank(message = "Имя продукта не может быть пустым")
     private String name;
 
     @JsonView(View.IdAndName.class)
-    @NotBlank
+    @NotBlank(message = "Описание продукта не может быть пустым")
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false,cascade = CascadeType.ALL)
@@ -26,21 +26,17 @@ public class Product extends BaseEntity implements Serializable {
     private SubCategory subCategory;
 
     @JsonView(View.IdAndName.class)
-    @NotNull
+    @NotNull(message = "Рейтинг продукта не может быть пустым")
     private byte rating;
 
     @JsonView(View.IdAndImg.class)
-    @NotBlank
+    @NotBlank(message = "Изображение продукта не может быть пустым")
     private String imgName;
 
     @JsonView(View.IdAndImg.class)
     @NotNull
     @Lob
     private byte[] img;
-
-//    @JsonView(View.IdAndImg.class)
-//    @NotBlank
-//    private String type;
 
     public Product() {
     }

@@ -10,19 +10,20 @@
                         <button class="nav-link text-dark" @click="getCatalog">Каталог</button>
                     </li>
                     <li class="nav-item">
-                        <button id="cCat" class="nav-link text-dark" @click="getContacts">Контакты</button>
+                        <button class="nav-link text-dark" @click="getContacts">Контакты</button>
                     </li>
                 </ul>
             </div>
         </nav>
         <component v-bind:is="mainComponent"></component>
+
     </div>
 </template>
 
 <script>
     import Catalog from "./catalog/Catalog.vue";
     import MainText from "./MainText.vue";
-    import Cont from "./Сont.vue";
+    import Cont from "./About.vue";
 
     export default {
         name: "Header",

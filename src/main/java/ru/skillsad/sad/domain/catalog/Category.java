@@ -5,10 +5,7 @@ import lombok.Data;
 import ru.skillsad.sad.domain.BaseEntity;
 import ru.skillsad.sad.domain.views.View;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -22,7 +19,7 @@ public class Category extends BaseEntity {
     private String name;
 
     @JsonView(View.IdAndName.class)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "category")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "category",fetch = FetchType.EAGER)
     private List<SubCategory> subCategoryList;
 
     public Category() {

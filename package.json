@@ -9,9 +9,14 @@
   "author": "Yurii",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "browser-image-compression": "^1.0.14",
     "vue": "^2.6.12",
-    "vue-resource": "^1.5.1"
+    "vue-axios": "^3.2.4",
+    "vue-resource": "^1.5.1",
+    "vue-router": "^3.5.1",
+    "vuetify": "^2.4.4",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

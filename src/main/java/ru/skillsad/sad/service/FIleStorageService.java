@@ -7,6 +7,7 @@ import ru.skillsad.sad.domain.catalog.Product;
 import ru.skillsad.sad.repository.ProductRepo;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 @Service
 public class FIleStorageService {
@@ -21,6 +22,8 @@ public class FIleStorageService {
         product.setImg(file.getBytes());
         return productRepo.save(product);
     }
+
+
 
     @Transactional
     public Product getImg(String id) {

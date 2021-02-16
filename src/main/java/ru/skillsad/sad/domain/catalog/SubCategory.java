@@ -23,7 +23,7 @@ public class SubCategory extends BaseEntity {
     private Category category;
 
     @JsonView(View.IdAndName.class)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "subCategory")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "subCategory",fetch = FetchType.EAGER)
     private List<Product> products;
 
     public SubCategory() {

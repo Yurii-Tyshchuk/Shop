@@ -19,10 +19,10 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "customers_role", joinColumns = @JoinColumn(name = "customers_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private Set<Roles> roles;
 
     public User(String name, String password) {
         this.name = name;
@@ -32,7 +32,7 @@ public class User extends BaseEntity implements UserDetails {
     public User() {
     }
 
-    public User(String name, String password, Set<Role> roles) {
+    public User(String name, String password, Set<Roles> roles) {
         this.name = name;
         this.password = password;
         this.roles = roles;
