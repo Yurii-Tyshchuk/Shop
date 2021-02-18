@@ -1,22 +1,29 @@
 <template>
     <div class="containerCat">
+        <!--    Категории     -->
         <div class="box1">
             <div v-if="TreeList != ''">
-                <div v-for="TreeCateg in TreeList">
+                <div v-for="TreeCateg in TreeList" class="cont">
                     <Category :category="TreeCateg"></Category>
                 </div>
             </div>
             <div v-else>
-                <Category :category="{}"></Category>
+                Нет категорий
+            </div>
+            <div>
+                <div style="float: left;" v-if="add">
+                    <input v-model="textNewCategory"/>
+                </div>
+                <button v-show="profileCat == 'active'" @click="addCat">{{btnNewCategory}}</button>
             </div>
         </div>
-
+        <!--    Товар по 1 из каждой категории     -->
         <div class="box2" v-if="b && TreeList != ''">
-            <div class="box3" v-for="TreeCateg2 in TreeList" v-if="TreeList[0].subCategoryList != ''">
+            <div class="box3" v-for="TreeCateg2 in TreeList" v-if="TreeCateg2.subCategoryList != ''">
                 <Product :prod-id="TreeCateg2.subCategoryList[0].products[0].id"></Product>
             </div>
         </div>
-
+        <!--    Товар конкретной под категории     -->
         <div class="box2" v-if="!b && TreeList[0].subCategoryList != ''">
             <div class="box3">
                 <div v-if="profileCat === 'active'">
@@ -32,9 +39,9 @@
 </template>
 
 <script>
-    import Product from "./Product.vue";
-    import CreateCard from "./CreateCard.vue";
-    import Category from "./Category.vue";
+    import Product from "../components/Product.vue";
+    import CreateCard from "../components/CreateCard.vue";
+    import Category from "../components/Category.vue";
     // [
     //     {
     //         "id": 1,
@@ -65,28 +72,50 @@
         data() {
             return {
                 profileCat: profile,
-                TreeList: '',
+                TreeList: [],
+                add: false,
                 b: true, //<- Появляется 1 товар каждой категории, при true
+                textNewCategory: '',
+                btnNewCategory: 'Добавить кат.',
             }
         },
         methods: {
             getTreeList() {
                 this.$http.get("/api/catalog")
                     .then(res => {
-                        this.TreeList = res.body;
+                        if (res.body) {
+                            this.TreeList = res.body;
+                        }
                     });
+            },
+            addCat() {
+                if (this.add) {
+                    this.add = false;
+                    this.btnNewCategory = 'Добавить кат.';
+                    this.$resource("/security/createCategory").save({}, {
+                        name: this.textNewCategory
+                    }).then(value => {
+                            console.log(value.body.message);
+                        }, value => console.log(value)
+                    )
+                } else {
+                    this.add = true;
+                    this.btnNewCategory = 'Сохранить';
+                }
             },
         },
         created() {
             this.getTreeList();
         },
         computed: {
-            Check() {
-                if (this.TreeList == '') {
-                    this.TreeList[0] = {}
-                }
-
-            }
+            // items() {
+            //     this.TreeList.forEach(function (data) {
+            //         data['children'] = data['subCategoryList']
+            //
+            //     })
+            //     console.log(this.TreeList)
+            //     return this.TreeList;
+            // }
         }
     }
 </script>
@@ -120,5 +149,10 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-gap: 25px;
+    }
+
+    .cont{
+        display: flex;
+        flex-direction: column;
     }
 </style>

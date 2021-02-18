@@ -19,6 +19,7 @@
 
             <v-container class="MAIN">
                 <router-view></router-view>
+                <router-view name="two"></router-view>
             </v-container>
 
         </v-app>
@@ -26,13 +27,8 @@
 </template>
 
 <script>
-    import Header from "./components/Header.vue";
-
     export default {
         name: "App",
-        components: {
-            Header
-        },
     }
 </script>
 
@@ -42,7 +38,6 @@
     }
 
     .Main_Bar {
-
         max-width: 1200px;
         margin: auto;
     }

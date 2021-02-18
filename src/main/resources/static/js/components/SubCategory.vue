@@ -1,14 +1,26 @@
 <template>
-    <div>
-        <div style="float: left;" v-if="subEdit">
-            <input v-model="subCategory.name"/>
+    <div class="TextSubCat">
+        <div v-if="subEdit">
+            <v-input v-model="subCategory.name"/>
         </div>
-        <div style="float: left;" v-else>
+        <div v-else>
             <span @click="getSubCat(subCategory.id,subCategory.id)">{{subCategory.name}}</span>
         </div>
         <div v-if="profileCat ==='active'">
-            <button @click="editSubCategory(subCategory.id,subCategory.name)"> {{subEditText}}</button>
-            <button @click="">X</button>
+            <v-btn elevation="1"
+                   outlined
+                   small
+                   rounded @click="editSubCategory(subCategory.id,subCategory.name)"
+            >
+                {{subEditText}}
+            </v-btn>
+            <v-btn elevation="1"
+                   outlined
+                   small
+                   rounded @click="deleteSubCat(subCategory.id)"
+            >
+                X
+            </v-btn>
         </div>
     </div>
 </template>
@@ -61,10 +73,27 @@
             getSubCat() {
                 this.b = !this.b;
             },
+            deleteSubCat(id) {
+                if (confirm("Вы уверены что хотите удалить подкатегорию? Все её товары удалятся.")) {
+                    this.$resource("/security/deleteSubCategory/{id}").get({id: id}).then(value => {
+                            console.log(value.body);
+                        }, value => console.log(value.body)
+                    )
+                }
+            }
         }
     }
 </script>
 
 <style scoped>
-
+    .TextSubCat {
+        white-space:nowrap;
+        float: left;
+        padding-left: 10px;
+        /*text-align: left;*/
+        /*white-space: nowrap*/
+    }
+    .TextSubCat div{
+        display:inline-block;
+    }
 </style>

@@ -1,26 +1,30 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import MainText from "../components/MainText.vue";
+import MainText from "../views/MainText.vue";
+import Catalog from "../views/Catalog.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: "/",
-        name: "MainText",
-        component: MainText
+        components: {
+            default: MainText,
+            two: () =>
+                import("../views/Catalog.vue")
+        }
     },
     {
         path: "/Catalog",
         name: "Catalog",
         component: () =>
-            import("../components/catalog/Catalog.vue")
+            import("../views/Catalog.vue")
     },
     {
         path: "/About",
         name: "About",
         component: () =>
-            import("../components/About.vue")
+            import("../views/About.vue")
     },
 ];
 

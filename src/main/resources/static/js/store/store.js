@@ -4,8 +4,13 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {},
+    state: {
+        ProdFromSubCat: false
+    },
     mutations: {},
     actions: {},
+    getters:{
+        ProdFromSubCat: state => state.ProdFromSubCat
+    },
     modules: {}
 });

@@ -1,34 +1,49 @@
 <template>
-    <div>
-        <div v-if="Object.keys(category).length != 0">
+    <div class="subContainer">
+        <div>
             <div class="left" v-if="edit">
-                <input v-model="category.name"/>
+                <v-input v-model="category.name"/>
             </div>
             <div class="left" v-else>
-                <span @click="a = !a">{{category.name}}</span>
+                <p @click="a = !a">{{category.name}}</p>
             </div>
             <div v-if="profileCat ==='active'">
-                <button @click="editCategory(category.id,category.name)"> {{editText}}</button>
-                <button @click="">X</button>
+                <v-btn elevation="1"
+                       outlined
+                       small
+                       rounded
+                       @click="editCategory(category.id,category.name)"
+                >
+                    {{ editText }}
+                </v-btn>
+                <v-btn
+                        elevation="1"
+                        outlined
+                        small
+                        rounded
+                        @click="deleteCat(category.id)"
+                >
+                    X
+                </v-btn>
             </div>
+        </div>
 
-            <div v-if="a && category.subCategoryList != ''">
-                <div class="subContainer" v-for="subCategory in category.subCategoryList">
-                    <SubCategory :sub-category="subCategory"></SubCategory>
-                </div>
-
-                <div style="float: left;" v-if="add">
-                    <input v-model="textNewSubCategory"/>
-                </div>
-                <button v-show="profileCat === 'active'" @click="addSubCat(category.id)">{{btnNewSubCategory}}</button>
+        <div v-if="a && category.subCategoryList != ''" class="subContainer">
+            <div v-for="subCategory in category.subCategoryList">
+                <SubCategory :sub-category="subCategory"></SubCategory>
             </div>
         </div>
 
         <div>
-            <div style="float: left;" v-if="add">
-                <input v-model="textNewCategory"/>
+            <div v-if="add">
+                <input v-model="textNewSubCategory"/>
             </div>
-            <button v-show="profileCat == 'active'" @click="addCat">{{btnNewCategory}}</button>
+            <v-btn elevation="1"
+                   outlined
+                   small
+                   rounded
+                   v-show="profileCat === 'active'" @click="addSubCat">{{btnNewSubCategory}}
+            </v-btn>
         </div>
     </div>
 </template>
@@ -51,9 +66,7 @@
                 add: false,
                 edit: false,
                 editText: 'Редакт.',
-                btnNewCategory: 'Добавить кат.',
                 btnNewSubCategory: 'Добавить подкат.',
-                textNewCategory: '',
                 textNewSubCategory: ''
             }
         },
@@ -74,22 +87,7 @@
                     this.editText = 'Сохр.';
                 }
             },
-            addCat() {
-                if (this.add) {
-                    this.add = false;
-                    this.btnNewCategory = 'Добавить кат.';
-                    this.$resource("/security/createCategory").save({}, {
-                        name: this.textNewCategory
-                    }).then(value => {
-                            console.log(value.body.message);
-                        }, value => console.log(value)
-                    )
-                } else {
-                    this.add = true;
-                    this.btnNewCategory = 'Сохранить';
-                }
-            },
-            addSubCat(id) {
+            addSubCat() {
                 if (this.addSub) {
                     this.addSub = false;
                     this.btnNewSubCategory = 'Добавить кат.';
@@ -104,6 +102,14 @@
                     this.addSub = true;
                     this.btnNewSubCategory = 'Сохранить';
                 }
+            },
+            deleteCat(id) {
+                if (confirm("Вы уверены что хотите удалить категорию? Все её подкатегории и товары удалятся.")) {
+                    this.$resource("/security/deleteCategory/{id}").get({id: id}).then(value => {
+                            console.log(value.body);
+                        }, value => console.log(value.body)
+                    )
+                }
             }
         }
     }
@@ -112,10 +118,14 @@
 <style scoped>
     .left {
         float: left;
+        cursor: pointer;
     }
 
     .subContainer {
-        padding-right: 10px;
-        margin-left: 20px;
+        display: flex;
+        flex-direction: column;
+        float: left;
+        /*padding-right: 10px;*/
+        /*margin-left: 20px;*/
     }
 </style>

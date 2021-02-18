@@ -26,7 +26,7 @@
         methods: {
             getProduct() {
                 this.$resource("/api/product/{id}").get({id: this.ProdId}).then(value => {
-                        this.imgUrl = `${new URL(location.href)}/img/download/${this.ProdId}`;
+                        this.imgUrl = `${window.location.origin}/Catalog/img/download/${this.ProdId}`;
                         console.log(this.imgUrl)
                         console.log(value.body);
                         this.prodBody = value.body;
