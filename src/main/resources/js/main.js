@@ -13,8 +13,6 @@ Vue.use(VueResource);
 Vue.use(VueLodash, { name: 'custom' , lodash: lodash })
 // Vue.use(VueAxios, axios);
 
-Vue.prototype.$idList = {Cat: 0, SubCat: 0}
-
 new Vue({
     vuetify,
     router,
