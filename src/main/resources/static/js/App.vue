@@ -7,12 +7,17 @@
         ></v-img>
 
         <v-app>
-            <v-toolbar max-height="80px" max-width="1200px" style=" border-radius: 25px; top: -20px; z-index: 3;">
+            <v-toolbar color="blue"
+                       flat
+                       min-height="80px"
+                       max-height="80px"
+                       max-width="1200px"
+                       style=" border-radius: 25px; top: -20px; z-index: 3;">
                 <v-spacer></v-spacer>
                 <v-toolbar-items style="padding-top: 10px">
-                    <v-btn to="/">Главная</v-btn>
-                    <v-btn to="/Catalog">Каталог</v-btn>
-                    <v-btn to="/About">About</v-btn>
+                    <v-btn dark color="blue" to="/">Главная</v-btn>
+                    <v-btn dark color="blue" to="/Catalog">Каталог</v-btn>
+                    <v-btn dark color="blue" id="cCat" to="/About">About</v-btn>
                 </v-toolbar-items>
                 <v-spacer></v-spacer>
             </v-toolbar>

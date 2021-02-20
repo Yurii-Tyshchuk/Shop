@@ -18,12 +18,12 @@ public class SubCategory extends BaseEntity {
     @NotBlank
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "category_id")
     private Category category;
 
     @JsonView(View.IdAndName.class)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "subCategory",fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true,mappedBy = "subCategory",fetch = FetchType.EAGER)
     private List<Product> products;
 
     public SubCategory() {

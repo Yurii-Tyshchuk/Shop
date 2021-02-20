@@ -4,7 +4,11 @@
             <textarea v-if="text.edit" v-model="text.textBody.text"></textarea>
             <label v-else>{{ text.textBody.text }}</label>
             <div v-if="profile =='active'">
-                <button @click="edit">{{button}}</button>
+                <v-btn
+                        elevation="1"
+                        outlined
+                        small
+                        @click="edit">{{button}}</v-btn>
                 <label>{{ error }}</label>
             </div>
         </div>

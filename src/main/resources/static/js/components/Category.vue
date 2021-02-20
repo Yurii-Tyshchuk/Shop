@@ -2,16 +2,15 @@
     <div class="subContainer">
         <div>
             <div class="left" v-if="edit">
-                <v-input v-model="category.name"/>
+                <input v-model="category.name"/>
             </div>
             <div class="left" v-else>
-                <p @click="a = !a">{{category.name}}</p>
+                <p style="cursor: pointer;" @click="a = !a">{{category.name}}</p>
             </div>
             <div v-if="profileCat ==='active'">
                 <v-btn elevation="1"
                        outlined
                        small
-                       rounded
                        @click="editCategory(category.id,category.name)"
                 >
                     {{ editText }}
@@ -20,7 +19,6 @@
                         elevation="1"
                         outlined
                         small
-                        rounded
                         @click="deleteCat(category.id)"
                 >
                     X
@@ -29,20 +27,25 @@
         </div>
 
         <div v-if="a && category.subCategoryList != ''" class="subContainer">
-            <div v-for="subCategory in category.subCategoryList">
-                <SubCategory :sub-category="subCategory"></SubCategory>
+            <div v-for="(subCategory,indexSub) in category.subCategoryList">
+                <SubCategory
+                        :sub-category="subCategory"
+                        :index-cat="index"
+                        :index-sub-cat="indexSub"
+                ></SubCategory>
             </div>
         </div>
 
-        <div>
-            <div v-if="add">
+        <div v-if="profileCat === 'active'">
+            <div class="left" v-if="addSub">
                 <input v-model="textNewSubCategory"/>
             </div>
             <v-btn elevation="1"
                    outlined
                    small
-                   rounded
-                   v-show="profileCat === 'active'" @click="addSubCat">{{btnNewSubCategory}}
+                   @click="addSubCat"
+            >
+                {{btnNewSubCategory}}
             </v-btn>
         </div>
     </div>
@@ -54,7 +57,9 @@
     export default {
         name: "Category",
         props: {
-            category: Object
+            category: Object,
+            index: Number,
+            idCat: Number
         },
         components: {
             SubCategory
@@ -63,7 +68,7 @@
             return {
                 profileCat: profile,
                 a: false,
-                add: false,
+                addSub: false,
                 edit: false,
                 editText: 'Редакт.',
                 btnNewSubCategory: 'Добавить подкат.',
@@ -89,15 +94,24 @@
             },
             addSubCat() {
                 if (this.addSub) {
-                    this.addSub = false;
-                    this.btnNewSubCategory = 'Добавить кат.';
-                    this.$resource("/security/createSubCategory").save({}, {
-                        name: this.textNewSubCategory,
-                        category: id
+                    this.btnNewSubCategory = 'Добавить подкат.';
+                    // this.$resource("/security/createSubCategory").save({}, {
+                    //     id: this.idCat,
+                    //     name: this.textNewSubCategory
+                    // }).then(value => {
+                    //         console.log(value.body.message);
+                    //     }, value => console.log(value)
+                    // )
+                    this.$http.get("/security/createSubCategory", {
+                        params: {
+                            id: this.idCat,
+                            name: this.textNewSubCategory
+                        }
                     }).then(value => {
                             console.log(value.body.message);
                         }, value => console.log(value)
                     )
+                    this.addSub = false;
                 } else {
                     this.addSub = true;
                     this.btnNewSubCategory = 'Сохранить';
@@ -118,13 +132,13 @@
 <style scoped>
     .left {
         float: left;
-        cursor: pointer;
     }
 
     .subContainer {
         display: flex;
         flex-direction: column;
         float: left;
+        padding-bottom: 10px;
         /*padding-right: 10px;*/
         /*margin-left: 20px;*/
     }

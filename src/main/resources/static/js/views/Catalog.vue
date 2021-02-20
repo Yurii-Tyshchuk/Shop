@@ -3,8 +3,11 @@
         <!--    Категории     -->
         <div class="box1">
             <div v-if="TreeList != ''">
-                <div v-for="TreeCateg in TreeList" class="cont">
-                    <Category :category="TreeCateg"></Category>
+                <div v-for="(TreeCateg,index) in TreeList" class="cont">
+                    <Category :category="TreeCateg"
+                              :index="index"
+                              :id-cat="TreeCateg.id"
+                    ></Category>
                 </div>
             </div>
             <div v-else>
@@ -18,19 +21,25 @@
             </div>
         </div>
         <!--    Товар по 1 из каждой категории     -->
-        <div class="box2" v-if="b && TreeList != ''">
-            <div class="box3" v-for="TreeCateg2 in TreeList" v-if="TreeCateg2.subCategoryList != ''">
-                <Product :prod-id="TreeCateg2.subCategoryList[0].products[0].id"></Product>
+        <div class="box2" v-if="!ProdFromSubCat && TreeList != ''">
+            <div class="box3">
+                <div v-for="TreeCateg2 in TreeList">
+                    <div v-if="TreeCateg2.subCategoryList != ''">
+                        <div v-if="TreeCateg2.subCategoryList[0].products != ''">
+                            <Product :prod-id="TreeCateg2.subCategoryList[0].products[0].id"></Product>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <!--    Товар конкретной под категории     -->
-        <div class="box2" v-if="!b && TreeList[0].subCategoryList != ''">
+        <!--    Товар конкретной подкатегории     -->
+        <div class="box2" v-if="ProdFromSubCat && TreeList != ''">
             <div class="box3">
                 <div v-if="profileCat === 'active'">
-                    <CreateCard :id-sub="TreeList[this.$idList.Cat].subCategoryList[this.$idList.SubCat].id"
-                                :name-sub="TreeList[this.$idList.Cat].subCategoryList[this.$idList.SubCat].name"></CreateCard>
+                    <CreateCard :id-sub="TreeList[this.IDCat].subCategoryList[this.IDSubCat].id"
+                                :name-sub="TreeList[this.IDCat].subCategoryList[this.IDSubCat].name"></CreateCard>
                 </div>
-                <div v-for="Product in TreeList[this.$idList.Cat].subCategoryList[this.$idList.SubCat].products">
+                <div v-for="Product in TreeList[this.IDCat].subCategoryList[this.IDSubCat].products">
                     <Product :prod-id="Product.id"></Product>
                 </div>
             </div>
@@ -42,6 +51,8 @@
     import Product from "../components/Product.vue";
     import CreateCard from "../components/CreateCard.vue";
     import Category from "../components/Category.vue";
+    import {mapGetters} from 'vuex';
+
     // [
     //     {
     //         "id": 1,
@@ -84,7 +95,11 @@
                 this.$http.get("/api/catalog")
                     .then(res => {
                         if (res.body) {
-                            this.TreeList = res.body;
+                            this.TreeList = _.sortBy(res.body, function (o) {
+                                return o.name;
+                            })
+                            // this.TreeList = res.body;
+                            console.log(this.TreeList)
                         }
                     });
             },
@@ -98,6 +113,7 @@
                             console.log(value.body.message);
                         }, value => console.log(value)
                     )
+                    this.getTreeList();
                 } else {
                     this.add = true;
                     this.btnNewCategory = 'Сохранить';
@@ -108,14 +124,11 @@
             this.getTreeList();
         },
         computed: {
-            // items() {
-            //     this.TreeList.forEach(function (data) {
-            //         data['children'] = data['subCategoryList']
-            //
-            //     })
-            //     console.log(this.TreeList)
-            //     return this.TreeList;
-            // }
+            ...mapGetters([
+                "IDCat",
+                "IDSubCat",
+                "ProdFromSubCat"
+            ]),
         }
     }
 </script>
@@ -151,7 +164,7 @@
         grid-gap: 25px;
     }
 
-    .cont{
+    .cont {
         display: flex;
         flex-direction: column;
     }

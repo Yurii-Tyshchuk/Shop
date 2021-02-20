@@ -17,9 +17,9 @@
         </div>
 
         <div class="Text">
-            <input type="text" v-model="nameProd">
-            <input type="text" v-model="description">
-            <input type="number" v-model="rating">
+            <input class="data" type="text" v-model="nameProd">
+            <input class="data" type="text" v-model="description">
+            <input class="data" type="number" v-model="rating">
         </div>
         <label @click="saveProduct">Сохранить</label>
     </div>
@@ -100,6 +100,7 @@
                 file.append('subCategory', this.idSub);
                 file.append('rating', this.rating);
                 file.append('imgName', this.file.name);
+
                 this.$http.post("/security/upload", file, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -140,5 +141,9 @@
 
     .hide {
         display: none;
+    }
+
+    .data {
+
     }
 </style>

@@ -35,6 +35,7 @@ public class CatalogController {
 
     @GetMapping(value = "/catalog", produces = MediaType.APPLICATION_JSON_VALUE)
     @JsonView(View.IdAndName.class)
+    @Transactional
     public List<Category> category() throws IOException {
         return categoryRepo.findAll();
     }

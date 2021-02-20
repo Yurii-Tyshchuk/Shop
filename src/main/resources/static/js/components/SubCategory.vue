@@ -1,23 +1,23 @@
 <template>
     <div class="TextSubCat">
         <div v-if="subEdit">
-            <v-input v-model="subCategory.name"/>
+            <input v-model="subCategory.name"/>
         </div>
         <div v-else>
-            <span @click="getSubCat(subCategory.id,subCategory.id)">{{subCategory.name}}</span>
+            <span style="cursor: pointer;" @click="getProdFromSubCat(indexCat,indexSubCat)">{{subCategory.name}}</span>
         </div>
         <div v-if="profileCat ==='active'">
             <v-btn elevation="1"
                    outlined
                    small
-                   rounded @click="editSubCategory(subCategory.id,subCategory.name)"
+                   @click="editSubCategory(subCategory.id,subCategory.name)"
             >
                 {{subEditText}}
             </v-btn>
             <v-btn elevation="1"
                    outlined
                    small
-                   rounded @click="deleteSubCat(subCategory.id)"
+                   @click="deleteSubCat(subCategory.id)"
             >
                 X
             </v-btn>
@@ -26,10 +26,14 @@
 </template>
 
 <script>
+    import {mapMutations} from 'vuex';
+
     export default {
         name: "SubCategory",
         props: {
-            subCategory: Object
+            subCategory: Object,
+            indexCat: Number,
+            indexSubCat: Number
         },
         data() {
             return {
@@ -54,24 +58,27 @@
                         )
                 }
             },
-            addSubCat(id) {
-                if (this.addSub) {
-                    this.addSub = false;
-                    this.btnNewSubCategory = 'Добавить кат.';
-                    this.$resource("/security/createSubCategory").save({}, {
-                        name: this.textNewSubCategory,
-                        category: id
-                    }).then(value => {
-                            console.log(value.body.message);
-                        }, value => console.log(value)
-                    )
-                } else {
-                    this.addSub = true;
-                    this.btnNewSubCategory = 'Сохранить';
-                }
-            },
-            getSubCat() {
-                this.b = !this.b;
+            // addSubCat(id) {
+            //     if (this.addSub) {
+            //         this.addSub = false;
+            //         this.btnNewSubCategory = 'Добавить кат.';
+            //         this.$resource("/security/createSubCategory").save({}, {
+            //             name: this.textNewSubCategory,
+            //             category: id
+            //         }).then(value => {
+            //                 console.log(value.body.message);
+            //             }, value => console.log(value)
+            //         )
+            //     } else {
+            //         this.addSub = true;
+            //         this.btnNewSubCategory = 'Сохранить';
+            //     }
+            // },
+            getProdFromSubCat(indexCat, indexSubCat) {
+                this.setIDCatAndSubCat({
+                    indexCat,
+                    indexSubCat
+                })
             },
             deleteSubCat(id) {
                 if (confirm("Вы уверены что хотите удалить подкатегорию? Все её товары удалятся.")) {
@@ -80,20 +87,24 @@
                         }, value => console.log(value.body)
                     )
                 }
-            }
+            },
+            ...mapMutations([
+                "setIDCatAndSubCat"
+            ])
         }
     }
 </script>
 
 <style scoped>
     .TextSubCat {
-        white-space:nowrap;
+        white-space: nowrap;
         float: left;
         padding-left: 10px;
         /*text-align: left;*/
         /*white-space: nowrap*/
     }
-    .TextSubCat div{
-        display:inline-block;
+
+    .TextSubCat div {
+        display: inline-block;
     }
 </style>

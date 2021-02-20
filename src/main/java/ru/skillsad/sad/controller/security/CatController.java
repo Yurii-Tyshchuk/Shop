@@ -3,6 +3,7 @@ package ru.skillsad.sad.controller.security;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.skillsad.sad.domain.catalog.Category;
 import ru.skillsad.sad.exception.ResponseTemp;
@@ -20,6 +21,7 @@ public class CatController {
     }
 
     @PostMapping(value = "/editCategory")
+    @Transactional
     public ResponseEntity<ResponseTemp> editCategory(@Valid @RequestBody Category category) {
         Category categoryFromDb = categoryRepo.getById(category.getId());
         BeanUtils.copyProperties(category, categoryFromDb, "id", "subCategoryList");
@@ -27,7 +29,7 @@ public class CatController {
         return new ResponseEntity<>(new ResponseTemp("Данные изменены"), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/deleteCategory/{id}")
+    @GetMapping(value = "/deleteCategory/{id}")
     public ResponseEntity<ResponseTemp> deleteCategory(@Valid @PathVariable String id) {
         categoryRepo.deleteById(Long.valueOf(id));
         return new ResponseEntity<>(new ResponseTemp("Данные удалены " + id), HttpStatus.OK);

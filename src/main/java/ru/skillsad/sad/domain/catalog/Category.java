@@ -19,7 +19,7 @@ public class Category extends BaseEntity {
     private String name;
 
     @JsonView(View.IdAndName.class)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "category",fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true,mappedBy = "category",fetch = FetchType.EAGER)
     private List<SubCategory> subCategoryList;
 
     public Category() {

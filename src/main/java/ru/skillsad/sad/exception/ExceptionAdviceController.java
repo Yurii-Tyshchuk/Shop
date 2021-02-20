@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -50,5 +51,10 @@ public class ExceptionAdviceController {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<ResponseTemp> handleMaxSizeException(MaxUploadSizeExceededException exc) {
         return new ResponseEntity<>(new ResponseTemp("File too large!"), HttpStatus.EXPECTATION_FAILED);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ResponseTemp> requestParamValidException(MissingServletRequestParameterException ex) {
+        return new ResponseEntity<>(new ResponseTemp(ex.getParameterName() + " <= Пустой или что нибудь еще"), HttpStatus.BAD_REQUEST);
     }
 }

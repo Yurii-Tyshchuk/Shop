@@ -5,7 +5,7 @@
             <span>{{prodBody.name}}</span><br>
             <span>{{prodBody.description}}</span><br>
             <span>Рейтинг: {{prodBody.rating}}</span><br>
-            <span style="cursor: pointer;" @click="getContact">Узнать</span>
+            <span style="cursor: pointer;"  @click="getContact">Узнать</span>
         </div>
     </div>
 </template>
@@ -27,8 +27,8 @@
             getProduct() {
                 this.$resource("/api/product/{id}").get({id: this.ProdId}).then(value => {
                         this.imgUrl = `${window.location.origin}/Catalog/img/download/${this.ProdId}`;
-                        console.log(this.imgUrl)
-                        console.log(value.body);
+                        // console.log(this.imgUrl)
+                        // console.log(value.body);
                         this.prodBody = value.body;
                     }, value => console.log(value.body)
                 )

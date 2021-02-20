@@ -21,7 +21,7 @@ public class Product extends BaseEntity implements Serializable {
     @NotBlank(message = "Описание продукта не может быть пустым")
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false,cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "subCategory_id")
     private SubCategory subCategory;
 
