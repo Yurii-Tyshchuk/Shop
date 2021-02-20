@@ -12,7 +12,7 @@
     <artifactId>sad</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sad</name>
-    <description></description>
+    <description>Sad</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -92,49 +92,45 @@
                     </excludes>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.8.0</version>
-                <configuration>
-                    <workingDirectory>./</workingDirectory>
-                    <nodeVersion>v14.5.1</nodeVersion>
-                    <npmVersion>7.5.4</npmVersion>
-                    <nodeDownloadRoot>http://nodejs.org/dist/</nodeDownloadRoot>
-                    <npmDownloadRoot>http://registry.npmjs.org/npm/-/</npmDownloadRoot>
-                    <installDirectory>./</installDirectory>
-                </configuration>
                 <executions>
                     <execution>
+                        <phase>generate-resources</phase>
                         <id>install node and npm</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
-                        <phase>generate-resources</phase>
-                    </execution>
-                    <execution>
-                        <id>npm install</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
                         <configuration>
-                            <arguments>ci --loglevel=error</arguments>
+                            <nodeVersion>v14.15.1</nodeVersion>
+                            <npmVersion>7.5.4</npmVersion>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>npm run-script build-prod</id>
-                        <phase>prepare-package</phase>
+                        <phase>generate-resources</phase>
+                        <id>npm-install</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run-script build</arguments>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <id>npm run-script build-prod</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-
 </project>

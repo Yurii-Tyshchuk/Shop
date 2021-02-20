@@ -1,5 +1,5 @@
 const path = require('path');
-const merge = require('webpack-merge');
+const {merge} = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -7,6 +7,6 @@ module.exports = merge(common, {
     output: {
         filename: 'main.js',
         // src\main\resources\static\dist
-        path: path.resolve(__dirname, 'src', 'main', 'resources', 'static', 'dist')
+        path: path.resolve(__dirname, 'src', 'main', 'resources', 'static', 'js')
     }
 });
