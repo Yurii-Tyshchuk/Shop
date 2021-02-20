@@ -1,5 +1,5 @@
 <template>
-    <div class="containerCont"> Это Контакты</div>
+    <div class="containerCont"> Это Контакты =D</div>
 </template>
 
 <script>
