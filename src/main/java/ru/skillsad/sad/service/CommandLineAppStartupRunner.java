@@ -47,7 +47,7 @@ public class CommandLineAppStartupRunner{
             mainTextRepo.save(new MainText(MAIN_TEXT));
         }
 
-        BufferedImage bImage = ImageIO.read(new FileInputStream("CatWarrior.jpg"));
+        BufferedImage bImage = ImageIO.read(new FileInputStream("./js/CatWarrior.jpg"));
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ImageIO.write(bImage, "jpg", bos);
         byte[] bytes = bos.toByteArray();
