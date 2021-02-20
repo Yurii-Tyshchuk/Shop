@@ -1,6 +1,6 @@
 package ru.skillsad.sad.service;
 
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.skillsad.sad.domain.catalog.Category;
@@ -14,11 +14,10 @@ import ru.skillsad.sad.repository.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.util.Collections;
 
 @Component
-public class CommandLineAppStartupRunner{
+public class CommandLineAppStartupRunner {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
     private final MainTextRepo mainTextRepo;
@@ -46,20 +45,22 @@ public class CommandLineAppStartupRunner{
         if (mainTextRepo.getById(1l) == null) {
             mainTextRepo.save(new MainText(MAIN_TEXT));
         }
+        if (subCategoryRepo.findByName("Груши-золотые") == null) {
+            BufferedImage bImage = ImageIO.read(new ClassPathResource("CatWarrior.jpg").getInputStream());
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(bImage, "jpg", bos);
+            byte[] bytes = bos.toByteArray();
 
-        BufferedImage bImage = ImageIO.read(new FileInputStream("./js/CatWarrior.jpg"));
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(bImage, "jpg", bos);
-        byte[] bytes = bos.toByteArray();
+            Category category = new Category("Груши");
+            SubCategory subCategory = new SubCategory("Груши-золотые");
 
-        for (int i = 0; i < 20; i++) {
-            Product product = new Product("Груша", "Описание груши",
-                    subCategoryRepo.findByName("Груши-золотые") == null ?
-                            new SubCategory("Груши-золотые", new Category("Категория груши"))
-                            : subCategoryRepo.findByName("Груши-золотые"),
-                    (byte) 4, "1.jpg", bytes);
-            productRepo.save(product);
+            for (int i = 0; i < 20; i++) {
+                Product product = new Product("Груша", "Описание груши", (byte) 4, "1.jpg", bytes);
+                subCategory.addProduct(product);
+            }
+
+            category.addSubCategory(subCategory);
+            categoryRepo.save(category);
         }
-
     }
 }

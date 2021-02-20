@@ -7,6 +7,7 @@ import ru.skillsad.sad.domain.views.View;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,8 +20,17 @@ public class Category extends BaseEntity {
     private String name;
 
     @JsonView(View.IdAndName.class)
-    @OneToMany(orphanRemoval = true,mappedBy = "category",fetch = FetchType.EAGER)
-    private List<SubCategory> subCategoryList;
+    @OneToMany(orphanRemoval = true,mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<SubCategory> subCategoryList = new ArrayList<>();
+
+    public void addSubCategory(SubCategory subCategory){
+        subCategoryList.add(subCategory);
+        subCategory.setCategory(this);
+    }
+    public void removeSubCategory(SubCategory subCategory){
+        subCategoryList.remove(subCategory);
+        subCategory.setCategory(null);
+    }
 
     public Category() {
     }

@@ -24,7 +24,8 @@ public class CatController {
     @Transactional
     public ResponseEntity<ResponseTemp> editCategory(@Valid @RequestBody Category category) {
         Category categoryFromDb = categoryRepo.getById(category.getId());
-        BeanUtils.copyProperties(category, categoryFromDb, "id", "subCategoryList");
+        categoryFromDb.setName(category.getName());
+//        BeanUtils.copyProperties(category, categoryFromDb, "id", "subCategoryList");
         categoryRepo.save(categoryFromDb);
         return new ResponseEntity<>(new ResponseTemp("Данные изменены"), HttpStatus.OK);
     }

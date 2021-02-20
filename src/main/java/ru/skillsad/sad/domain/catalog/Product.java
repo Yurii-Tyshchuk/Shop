@@ -5,7 +5,10 @@ import lombok.Data;
 import ru.skillsad.sad.domain.BaseEntity;
 import ru.skillsad.sad.domain.views.View;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -22,7 +25,7 @@ public class Product extends BaseEntity implements Serializable {
     private String description;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "subCategory_id")
+//    @JoinColumn(name = "subCategory_id")
     private SubCategory subCategory;
 
     @JsonView(View.IdAndName.class)
@@ -41,15 +44,27 @@ public class Product extends BaseEntity implements Serializable {
     public Product() {
     }
 
-    public Product(@NotBlank String name, @NotBlank String description) {
-        this.name = name;
-        this.description = description;
-    }
-
-    public Product(@NotBlank String name, @NotBlank String description, SubCategory subCategory, @NotNull byte rating, @NotBlank String imgName, @NotNull byte[] img) {
+    public Product(@NotBlank String name,
+                   @NotBlank String description,
+                   SubCategory subCategory,
+                   @NotNull byte rating,
+                   @NotBlank String imgName,
+                   @NotNull byte[] img) {
         this.name = name;
         this.description = description;
         this.subCategory = subCategory;
+        this.rating = rating;
+        this.imgName = imgName;
+        this.img = img;
+    }
+
+    public Product(@NotBlank(message = "Имя продукта не может быть пустым") String name,
+                   @NotBlank(message = "Описание продукта не может быть пустым") String description,
+                   @NotNull(message = "Рейтинг продукта не может быть пустым") byte rating,
+                   @NotBlank(message = "Изображение продукта не может быть пустым") String imgName,
+                   @NotNull byte[] img) {
+        this.name = name;
+        this.description = description;
         this.rating = rating;
         this.imgName = imgName;
         this.img = img;

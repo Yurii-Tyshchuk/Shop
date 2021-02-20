@@ -7,6 +7,7 @@ import ru.skillsad.sad.domain.views.View;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,24 +19,28 @@ public class SubCategory extends BaseEntity {
     @NotBlank
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "category_id")
+    @ManyToOne(optional = false)
+//    @JoinColumn(name = "category_id")
     private Category category;
 
     @JsonView(View.IdAndName.class)
-    @OneToMany(orphanRemoval = true,mappedBy = "subCategory",fetch = FetchType.EAGER)
-    private List<Product> products;
+    @OneToMany(orphanRemoval = true,mappedBy = "subCategory",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Product> products = new ArrayList<>();
+
+    public void addProduct(Product product){
+        products.add(product);
+        product.setSubCategory(this);
+    }
+    public void removeProduct(Product product){
+        products.remove(product);
+        product.setSubCategory(null);
+    }
 
     public SubCategory() {
     }
 
     public SubCategory(@NotBlank String name) {
         this.name = name;
-    }
-
-    public SubCategory(String name, List<Product> products) {
-        this.name = name;
-        this.products = products;
     }
 
     public SubCategory(@NotBlank String name, Category category) {

@@ -3,6 +3,7 @@ package ru.skillsad.sad.controller;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +21,11 @@ public class IndexController {
 
     public IndexController(CommandLineAppStartupRunner runner) throws Exception {
         this.runner = runner;
+//        this.runner.run();
     }
 
     @GetMapping()
+    @Transactional
     public String main(Model model, @AuthenticationPrincipal User user) throws Exception {
         if (user != null) {
             model.addAttribute("profile", "active");
@@ -30,6 +33,7 @@ public class IndexController {
             model.addAttribute("profile", "null");
         }
         model.addAttribute("isDevMode", "dev".equals(profile));
+        runner.run();
         return "index";
     }
     @GetMapping("/Catalog")

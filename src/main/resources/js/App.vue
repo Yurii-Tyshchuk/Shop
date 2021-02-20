@@ -23,8 +23,10 @@
             </v-toolbar>
 
             <v-container class="MAIN">
-                <router-view></router-view>
-                <router-view name="two"></router-view>
+                <keep-alive include="Catalog">
+                    <router-view></router-view>
+                    <router-view name="two"></router-view>
+                </keep-alive>
             </v-container>
 
         </v-app>

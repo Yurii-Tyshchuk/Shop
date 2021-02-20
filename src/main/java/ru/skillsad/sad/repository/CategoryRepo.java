@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface CategoryRepo extends JpaRepository<Category, Long> {
     Category getById(Long id);
+    Category findByName(String name);
 }
