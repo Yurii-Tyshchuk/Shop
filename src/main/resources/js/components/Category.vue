@@ -67,7 +67,7 @@
         data() {
             return {
                 profileCat: profile,
-                a: false,
+                a: true,
                 addSub: false,
                 edit: false,
                 editText: 'Редакт.',

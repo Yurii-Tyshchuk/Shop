@@ -65,11 +65,12 @@
     .containerMainText {
         display: grid;
         grid-template-columns: 1fr;
+        margin-bottom: 10px;
     }
 
     .boxMainText {
         padding: 10px;
-        border: 1px solid silver;
+        border: 1px solid black;
         /*grid-column-start: 2;*/
         /*grid-column-end: 3;*/
     }

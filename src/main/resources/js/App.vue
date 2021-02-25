@@ -22,10 +22,10 @@
                 <v-spacer></v-spacer>
             </v-toolbar>
 
-            <v-container class="MAIN">
+            <div class="MAIN">
                 <router-view></router-view>
                 <router-view name="two"></router-view>
-            </v-container>
+            </div>
 
         </v-app>
     </div>
@@ -40,6 +40,7 @@
 <style scoped>
     .MAIN {
         max-width: 1200px;
+        z-index: 1;
     }
 
     .Main_Bar {

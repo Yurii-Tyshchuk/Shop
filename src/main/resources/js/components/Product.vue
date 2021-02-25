@@ -1,21 +1,23 @@
 <template>
     <div class="card">
-        <img :src="imgUrl"/>
+        <img class="ImgStyle" :src="imgUrl"/>
         <div class="containerText">
-            <span>{{prodBody.name}}</span><br>
+            <h2 class="TitleProd">{{prodBody.name}}</h2>
             <span style="white-space: pre-line;">{{prodBody.description}}</span><br>
             <span>Рейтинг: {{prodBody.rating}}</span><br>
             <v-btn elevation="1"
                    small
                    @click="getContact"
                    color="green"
-            >Узнать
+            >
+                Узнать
             </v-btn>
             <v-btn v-if="profile === 'active'" elevation="1"
                    small
                    @click="deleteProduct"
                    color="red"
-            >Удалить
+            >
+                Удалить
             </v-btn>
         </div>
     </div>
@@ -51,10 +53,10 @@
                 document.getElementById("cCat").click();
             },
             deleteProduct() {
-                if (confirm("Вы уверены, что хотите удалить товара?")){
+                if (confirm("Вы уверены, что хотите удалить товара?")) {
                     this.$resource("/security/delete/{id}").get({id: this.ProdId}).then(value => {
                         console.log(value.body)
-                    },reason => {
+                    }, reason => {
                         console.log(reason.body)
                     })
                     this.$emit('updateCatalog')
@@ -65,7 +67,7 @@
             this.getProduct();
         },
         watch: {
-            ProdId(old,newProps){
+            ProdId(old, newProps) {
                 this.getProduct();
             }
         }
@@ -74,14 +76,15 @@
 
 <style scoped>
     img {
-        width: 200px;
-        height: 200px;
+        width: 100%;
+        height: 100%;
     }
 
     .card {
         padding: 10px;
         height: auto;
         width: 230px;
+        outline: 1px solid black;
     }
 
     .card:hover {
@@ -90,5 +93,18 @@
 
     .containerText {
         padding: 2px 8px;
+    }
+
+    .TitleProd {
+        text-align: center;
+        font-size: 12px;
+        text-transform: uppercase;
+        font-family: Circe, sans-serif;
+        margin: 0 15px
+    }
+
+    .ImgStyle {
+        border-radius: 10px;
+        /*margin: 0 15px;*/
     }
 </style>

@@ -22,7 +22,7 @@
 
         <div class="Text">
             <input placeholder="Введите имя продукта" class="data" type="text" v-model="nameProd"/>
-            <textarea placeholder="Описание продукта" class="data" type="text" v-model="description"/>
+            <textarea style="outline: none;" placeholder="Описание продукта" class="data" type="text" v-model="description"/>
             <input placeholder="Баллы если требуются" class="data" type="number" v-model="rating"/>
         </div>
         <v-btn small @click="saveProduct">Сохранить</v-btn>
@@ -97,6 +97,7 @@
         padding: 10px;
         height: auto;
         width: 230px;
+        outline: 2px solid black;
     }
 
     .card:hover {

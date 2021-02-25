@@ -102,9 +102,21 @@
                 this.$http.get("/api/catalog")
                     .then(res => {
                         if (res.body) {
+                            function compare(a,b) {
+                                if (a.name > b.name) return 1;
+                                if (a.name < b.name) return -1;
+                                return 0;
+                            }
                             this.TreeList = _.sortBy(res.body, function (o) {
                                 return o.name;
                             })
+                            for (let i = 0; i < this.TreeList.length; i++) {
+                                this.TreeList[i].subCategoryList.sort(compare);
+
+                                for (let j = 0; j < this.TreeList[i].subCategoryList.length; j++) {
+                                    this.TreeList[i].subCategoryList[j].products.sort(compare);
+                                }
+                            }
                             // this.TreeList = res.body;
                             console.log(this.TreeList)
                         }
