@@ -14,10 +14,9 @@ import ru.skillsad.sad.service.CommandLineAppStartupRunner;
 @RequestMapping("/")
 public class IndexController {
 
+    private final CommandLineAppStartupRunner runner;
     @Value("${spring.profiles.active:prod}")
     private String profile;
-
-    private final CommandLineAppStartupRunner runner;
 
     public IndexController(CommandLineAppStartupRunner runner) throws Exception {
         this.runner = runner;
@@ -32,9 +31,10 @@ public class IndexController {
             model.addAttribute("profile", "null");
         }
         model.addAttribute("isDevMode", "dev".equals(profile));
-        runner.run();
+        if ("dev".equals(profile)) runner.run();
         return "index";
     }
+
     @GetMapping("/Catalog")
     public String Catalog(Model model, @AuthenticationPrincipal User user) throws Exception {
         if (user != null) {
@@ -44,6 +44,7 @@ public class IndexController {
         }
         return "redirect:/";
     }
+
     @GetMapping("/About")
     public String About(Model model, @AuthenticationPrincipal User user) throws Exception {
         if (user != null) {
