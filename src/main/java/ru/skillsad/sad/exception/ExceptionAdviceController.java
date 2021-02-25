@@ -19,10 +19,8 @@ public class ExceptionAdviceController {
     public ResponseEntity<ResponseTemp> responseEntity(NotUniqueEntity notUniqueEntity) {
         return new ResponseEntity<>(new ResponseTemp(notUniqueEntity.getMessage()), HttpStatus.BAD_REQUEST);
     }
-
     /**
      * Отвечает за обратку исключений при записи в бд
-     *
      * @return Json с параметром message в котором будет краткое описание ошибки
      */
     @ExceptionHandler(ConstraintViolationException.class)
@@ -37,7 +35,7 @@ public class ExceptionAdviceController {
 
     /**
      * @param e исключение связанное с ошибкой валидации, которое Spring сам запихнет =D
-     * @return Пока что не знаю
+     * @return Json с параметром message в котором будет краткое описание ошибки
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseTemp> validException(MethodArgumentNotValidException e) {

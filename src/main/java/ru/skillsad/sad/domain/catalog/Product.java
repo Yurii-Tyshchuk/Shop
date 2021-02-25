@@ -5,10 +5,7 @@ import lombok.Data;
 import ru.skillsad.sad.domain.BaseEntity;
 import ru.skillsad.sad.domain.views.View;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -25,18 +22,18 @@ public class Product extends BaseEntity implements Serializable {
     private String description;
 
     @ManyToOne(optional = false)
-//    @JoinColumn(name = "subCategory_id")
+    @JoinColumn(name = "subCategory_id")
     private SubCategory subCategory;
 
     @JsonView(View.IdAndName.class)
     @NotNull(message = "Рейтинг продукта не может быть пустым")
     private byte rating;
 
-    @JsonView(View.IdAndImg.class)
+    @JsonView(View.IdAndNameAndImg.class)
     @NotBlank(message = "Изображение продукта не может быть пустым")
     private String imgName;
 
-    @JsonView(View.IdAndImg.class)
+    @JsonView(View.IdAndNameAndImg.class)
     @NotNull
     @Lob
     private byte[] img;

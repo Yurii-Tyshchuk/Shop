@@ -5,7 +5,5 @@ public final class View {
 
     public interface IdAndName extends Id {}
 
-    public interface IdAndImg extends Id {}
-
-    public interface Full extends IdAndName {}
+    public interface IdAndNameAndImg extends IdAndName {}
 }

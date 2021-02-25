@@ -17,7 +17,14 @@
                 <div style="float: left;" v-if="add">
                     <input v-model="textNewCategory"/>
                 </div>
-                <button v-show="profileCat == 'active'" @click="addCat">{{btnNewCategory}}</button>
+                <v-btn elevation="1"
+                       outlined
+                       small
+                       v-show="profileCat == 'active'"
+                       @click="addCat"
+                >
+                    {{btnNewCategory}}
+                </v-btn>
             </div>
         </div>
         <!--    Товар по 1 из каждой категории     -->
@@ -40,7 +47,7 @@
                                 :name-sub="TreeList[this.IDCat].subCategoryList[this.IDSubCat].name"></CreateCard>
                 </div>
                 <div v-for="Product in TreeList[this.IDCat].subCategoryList[this.IDSubCat].products">
-                    <Product :prod-id="Product.id"></Product>
+                    <Product :prod-id="Product.id" @updateCatalog="getTreeList"></Product>
                 </div>
             </div>
         </div>

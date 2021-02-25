@@ -15,12 +15,11 @@ import java.util.List;
 public class SubCategory extends BaseEntity {
 
     @JsonView(View.IdAndName.class)
-    @Column(unique = true)
-    @NotBlank
+    @NotBlank(message = "Имя подкатегории не должно быть пустым")
     private String name;
 
     @ManyToOne(optional = false)
-//    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @JsonView(View.IdAndName.class)

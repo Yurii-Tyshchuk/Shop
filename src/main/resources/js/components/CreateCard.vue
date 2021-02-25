@@ -12,16 +12,20 @@
                @change="onUploadFiles">
 
         <div class="form-inline">
-            <label for="imageUpload" class="btn" style="width: auto">Выбрать фото</label>
-            <label @click="deleteImg" class="btn">X</label>
+            <v-btn
+                    small
+                    @click="Click"
+                    >Выбрать фото
+            </v-btn>
+            <v-btn small color="red" @click="deleteImg" class="btn">X</v-btn>
         </div>
 
         <div class="Text">
-            <input class="data" type="text" v-model="nameProd">
-            <input class="data" type="text" v-model="description">
-            <input class="data" type="number" v-model="rating">
+            <input placeholder="Введите имя продукта" class="data" type="text" v-model="nameProd"/>
+            <textarea placeholder="Описание продукта" class="data" type="text" v-model="description"/>
+            <input placeholder="Баллы если требуются" class="data" type="number" v-model="rating"/>
         </div>
-        <label @click="saveProduct">Сохранить</label>
+        <v-btn small @click="saveProduct">Сохранить</v-btn>
     </div>
 </template>
 
@@ -46,9 +50,7 @@
         methods: {
             onUploadFiles(event) {
                 let file = event.target.files[0];
-                // const reader = new FileReader();
-                // reader.onload = ev => this.image = ev.target.result;
-                // reader.readAsDataURL(file);
+                console.log(file);
                 let options = {
                     maxSizeMB: 1,
                     maxWidthOrHeight: 400,
@@ -58,40 +60,12 @@
                     this.file = value;
                     this.image = URL.createObjectURL(value)
                     console.log(value);
-                    console.log(this.idSub);
-
                 })
             },
             deleteImg() {
                 this.image = '';
             },
             saveProduct() {
-                //     description: this.description,
-                //         subCategory
-                // :
-                //     this.nameSub,
-                //         rating
-                // :
-                //     this.rating,
-                //         imgName
-                // :
-                this.file.name
-                let data = new FormData();
-                data.append('name', this.nameProd);
-                data.append('description', this.description);
-                data.append('subCategory', this.nameSub);
-                data.append('rating', this.rating);
-                data.append('imgName', this.file.name);
-                let object = {
-                    name: this.nameProd,
-                    description: this.description,
-                    subCategory: this.nameSub,
-                    rating: this.rating,
-                    imgName: this.file.name
-                };
-
-                let blob = new Blob()
-
                 let file = new FormData();
                 file.append('file', this.file);
                 // file.append('data', object)
@@ -109,7 +83,11 @@
                         console.log(value.body.message);
                     }, value => console.log(value)
                 )
+            },
+            Click(){
+                this.$refs.imgFiles.click();
             }
+
         }
     }
 </script>

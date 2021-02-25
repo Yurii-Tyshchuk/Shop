@@ -14,7 +14,9 @@ import ru.skillsad.sad.repository.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class CommandLineAppStartupRunner {
@@ -23,21 +25,18 @@ public class CommandLineAppStartupRunner {
     private final MainTextRepo mainTextRepo;
     private final CategoryRepo categoryRepo;
     private final SubCategoryRepo subCategoryRepo;
-    private final ProductRepo productRepo;
     private final String MAIN_TEXT = "Но дальнейшее развитие различных форм деятельности представляет собой интересный эксперимент проверки своевременного выполнения сверхзадачи. Ясность нашей позиции очевидна: укрепление и развитие внутренней структуры требует определения и уточнения переосмысления внешнеэкономических политик. Прежде всего, существующая теория играет важную роль в формировании глубокомысленных рассуждений. Высокий уровень вовлечения представителей целевой аудитории является четким доказательством простого факта: выбранный нами инновационный путь не оставляет шанса для инновационных методов управления процессами. Каждый из нас понимает очевидную вещь: глубокий уровень погружения играет важную роль в формировании форм воздействия. Приятно, граждане, наблюдать, как диаграммы связей лишь добавляют фракционных разногласий и смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности. А также стремящиеся вытеснить традиционное производство, нанотехнологии набирают популярность среди определенных слоев населения, а значит, должны быть призваны к ответу. Также как сплочённость команды профессионалов предоставляет широкие возможности для приоритизации разума над эмоциями.";
 
-    public CommandLineAppStartupRunner(UserRepo userRepo, PasswordEncoder passwordEncoder, MainTextRepo mainTextRepo, CategoryRepo categoryRepo, SubCategoryRepo subCategoryRepo, ProductRepo productRepo) {
+    public CommandLineAppStartupRunner(UserRepo userRepo, PasswordEncoder passwordEncoder, MainTextRepo mainTextRepo, CategoryRepo categoryRepo, SubCategoryRepo subCategoryRepo) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
         this.mainTextRepo = mainTextRepo;
         this.categoryRepo = categoryRepo;
         this.subCategoryRepo = subCategoryRepo;
-        this.productRepo = productRepo;
     }
 
     public void run() throws Exception {
         if (userRepo.findByName("Ad") == null) {
-
             User user = new User("Ad", passwordEncoder.encode("12"));
             user.setRoles(Collections.singleton(Roles.ROLE_ADMIN));
             userRepo.save(user);
@@ -58,7 +57,6 @@ public class CommandLineAppStartupRunner {
                 Product product = new Product("Груша", "Описание груши", (byte) 4, "1.jpg", bytes);
                 subCategory.addProduct(product);
             }
-
             category.addSubCategory(subCategory);
             categoryRepo.save(category);
         }

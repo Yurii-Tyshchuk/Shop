@@ -6,7 +6,7 @@ import ru.skillsad.sad.domain.catalog.Product;
 
 import java.util.Optional;
 
-@Repository
+
 public interface ProductRepo extends JpaRepository<Product, Long> {
     Optional<Product> findByName(String name);
 
