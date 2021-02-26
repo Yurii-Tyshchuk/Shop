@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.skillsad.sad.domain.general.MainText;
 import ru.skillsad.sad.repository.MainTextRepo;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api")
 public class GeneralController {
@@ -15,7 +17,7 @@ public class GeneralController {
     public GeneralController(MainTextRepo mainTextRepo) {this.mainTextRepo = mainTextRepo;}
 
     @GetMapping(value = "/general", produces = MediaType.APPLICATION_JSON_VALUE)
-    public MainText getGeneralText() {
-        return mainTextRepo.findById(1L).get();
+    public Optional<MainText> getGeneralText() {
+        return mainTextRepo.findById(1L);
     }
 }
