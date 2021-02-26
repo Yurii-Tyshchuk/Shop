@@ -30,7 +30,7 @@
             Text() {
                 this.$http.get("/api/general")
                     .then(res => {
-                        this.text.textBody = res.body;
+                        this.text.textBody = res.body != null ? res.body : "Пусто";
                     });
             },
             edit() {
