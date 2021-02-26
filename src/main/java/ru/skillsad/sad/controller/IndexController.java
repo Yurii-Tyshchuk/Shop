@@ -20,6 +20,7 @@ public class IndexController {
 
     public IndexController(CommandLineAppStartupRunner runner) throws Exception {
         this.runner = runner;
+        this.runner.runUser();
     }
 
     @GetMapping()

@@ -35,12 +35,15 @@ public class CommandLineAppStartupRunner {
         this.subCategoryRepo = subCategoryRepo;
     }
 
-    public void run() throws Exception {
+    public void runUser() {
         if (userRepo.findByName("Ad") == null) {
             User user = new User("Ad", passwordEncoder.encode("12"));
             user.setRoles(Collections.singleton(Roles.ROLE_ADMIN));
             userRepo.save(user);
         }
+    }
+
+    public void run() throws Exception {
         if (mainTextRepo.getById(1l) == null) {
             mainTextRepo.save(new MainText(MAIN_TEXT));
         }
