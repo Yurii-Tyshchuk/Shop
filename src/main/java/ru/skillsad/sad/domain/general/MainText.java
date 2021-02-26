@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Data
 public class MainText extends BaseEntity {
-    @NotBlank
+
     @Size(max = 3000)
     private String text;
 

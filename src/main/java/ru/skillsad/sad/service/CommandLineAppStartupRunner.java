@@ -9,14 +9,15 @@ import ru.skillsad.sad.domain.catalog.SubCategory;
 import ru.skillsad.sad.domain.general.MainText;
 import ru.skillsad.sad.domain.user.Roles;
 import ru.skillsad.sad.domain.user.User;
-import ru.skillsad.sad.repository.*;
+import ru.skillsad.sad.repository.CategoryRepo;
+import ru.skillsad.sad.repository.MainTextRepo;
+import ru.skillsad.sad.repository.SubCategoryRepo;
+import ru.skillsad.sad.repository.UserRepo;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 @Component
 public class CommandLineAppStartupRunner {

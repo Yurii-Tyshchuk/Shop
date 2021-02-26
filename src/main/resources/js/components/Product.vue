@@ -4,7 +4,7 @@
         <div class="containerText">
             <h2 class="TitleProd">{{prodBody.name}}</h2>
             <span style="white-space: pre-line;">{{prodBody.description}}</span><br>
-            <span>Рейтинг: {{prodBody.rating}}</span><br>
+            <span v-if="prodBody.rating !== -1">Баллы: {{prodBody.rating}}</span><br>
             <v-btn elevation="1"
                    small
                    @click="getContact"
