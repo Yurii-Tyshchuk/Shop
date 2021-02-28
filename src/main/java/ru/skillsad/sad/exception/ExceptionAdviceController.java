@@ -15,10 +15,7 @@ import java.util.Set;
 
 @RestControllerAdvice
 public class ExceptionAdviceController {
-    @ExceptionHandler
-    public ResponseEntity<ResponseTemp> responseEntity(NotUniqueEntity notUniqueEntity) {
-        return new ResponseEntity<>(new ResponseTemp(notUniqueEntity.getMessage()), HttpStatus.BAD_REQUEST);
-    }
+
     /**
      * Отвечает за обратку исключений при записи в бд
      * @return Json с параметром message в котором будет краткое описание ошибки

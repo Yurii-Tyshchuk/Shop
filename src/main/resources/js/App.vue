@@ -17,7 +17,7 @@
                 <v-toolbar-items style="padding-top: 10px">
                     <v-btn dark color="blue" to="/">Главная</v-btn>
                     <v-btn dark color="blue" to="/Catalog">Каталог</v-btn>
-                    <v-btn dark color="blue" id="cCat" to="/About">About</v-btn>
+                    <v-btn dark color="blue" id="cCat" to="/About">Контакты</v-btn>
                 </v-toolbar-items>
                 <v-spacer></v-spacer>
             </v-toolbar>

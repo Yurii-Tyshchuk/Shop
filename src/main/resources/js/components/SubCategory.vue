@@ -15,7 +15,7 @@
                 {{subEditText}}
             </v-btn>
             <v-btn elevation="1"
-                   outlined
+                   color="error"
                    small
                    @click="deleteSubCat(subCategory.id)"
             >
@@ -57,23 +57,8 @@
                             }, value => console.log(value)
                         )
                 }
+                this.$emit('updateCatalog');
             },
-            // addSubCat(id) {
-            //     if (this.addSub) {
-            //         this.addSub = false;
-            //         this.btnNewSubCategory = 'Добавить кат.';
-            //         this.$resource("/security/createSubCategory").save({}, {
-            //             name: this.textNewSubCategory,
-            //             category: id
-            //         }).then(value => {
-            //                 console.log(value.body.message);
-            //             }, value => console.log(value)
-            //         )
-            //     } else {
-            //         this.addSub = true;
-            //         this.btnNewSubCategory = 'Сохранить';
-            //     }
-            // },
             getProdFromSubCat(indexCat, indexSubCat) {
                 this.setIDCatAndSubCat({
                     indexCat,
@@ -85,7 +70,8 @@
                     this.$resource("/security/deleteSubCategory/{id}").get({id: id}).then(value => {
                             console.log(value.body);
                         }, value => console.log(value.body)
-                    )
+                    );
+                    this.$emit('updateCatalog');
                 }
             },
             ...mapMutations([

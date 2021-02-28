@@ -28,6 +28,5 @@ public class ProdService {
         SubCategory subCategory = product.getSubCategory();
         subCategory.removeProduct(product);
         subCategoryRepo.save(subCategory);
-//        productRepo.deleteById(Long.valueOf(id));
     }
 }

@@ -3,12 +3,13 @@
         <div class="boxMainText">
             <textarea v-if="text.edit" v-model="text.textBody.text"></textarea>
             <label v-else>{{ text.textBody.text }}</label>
-            <div v-if="profile =='active'">
+            <div v-if="profile == 'active'">
                 <v-btn
                         elevation="1"
                         outlined
                         small
-                        @click="edit">{{button}}</v-btn>
+                        @click="edit">{{button}}
+                </v-btn>
                 <label>{{ error }}</label>
             </div>
         </div>
@@ -21,8 +22,8 @@
         data() {
             return {
                 profile: profile,
-                text: {'textBody': "", edit: false},
-                button: 'Редактировать',
+                text: {'textBody': {}, edit: false},
+                button: 'Редактировать описание',
                 error: ''
             }
         },
@@ -30,17 +31,17 @@
             Text() {
                 this.$http.get("/api/general")
                     .then(res => {
-                        this.text.textBody = res.body != null ? res.body : "Пусто";
+                        this.text.textBody = res.body;
                     });
             },
             edit() {
-                if (this.text.edit == false) {
+                if (this.text.edit) {
                     this.text.edit = true;
                     this.button = 'Сохранить';
                 } else {
                     this.text.edit = false;
                     this.button = 'Редактировать';
-                    this.$resource("/security/editGeneral").save({}, {
+                    this.$resource("/security/editConOrMainText/1").save({}, {
                         id: 0,
                         text: this.text.textBody.text
                     }).then(value => {

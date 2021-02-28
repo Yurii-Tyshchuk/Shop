@@ -8,14 +8,14 @@
             <v-btn elevation="1"
                    small
                    @click="getContact"
-                   color="green"
+                   color="success"
             >
                 Узнать
             </v-btn>
             <v-btn v-if="profile === 'active'" elevation="1"
                    small
                    @click="deleteProduct"
-                   color="red"
+                   color="error"
             >
                 Удалить
             </v-btn>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
     //{ "id": 1, "name": "Груша", "description": "Описание груши", "rating": 4 }
     export default {
         name: "Product",
@@ -39,7 +40,8 @@
         },
         methods: {
             getProduct() {
-                this.$resource("/api/product/{id}").get({id: this.ProdId}).then(value => {
+                let url = this.ProdFromCat? '/api/products/{id}': '/api/product/{id}';
+                this.$resource(url).get({id: this.ProdId}).then(value => {
                         this.imgUrl = `${window.location.origin}/api/download/${this.ProdId}`;
 
                         // this.imgUrl = URL.createObjectURL(new Blob([value.body.img], {type: "image/png"}));
@@ -70,6 +72,12 @@
             ProdId(old, newProps) {
                 this.getProduct();
             }
+        },
+        computed: {
+            ...mapGetters([
+                "ProdFromSubCat",
+                "ProdFromCat"
+            ]),
         }
     }
 </script>

@@ -5,7 +5,7 @@
                 <input v-model="category.name"/>
             </div>
             <div class="left" v-else>
-                <p style="cursor: pointer;" @click="a = !a">{{category.name}}</p>
+                <p style="cursor: pointer;" @click="checkProdOrSub(index)">{{category.name}}</p>
             </div>
             <div v-if="profileCat ==='active'">
                 <v-btn elevation="1"
@@ -16,8 +16,8 @@
                     {{ editText }}
                 </v-btn>
                 <v-btn
+                        color="error"
                         elevation="1"
-                        outlined
                         small
                         @click="deleteCat(category.id)"
                 >
@@ -26,23 +26,24 @@
             </div>
         </div>
 
-        <div v-if="a && category.subCategoryList != ''" class="subContainer">
+        <div v-if="isVisibleSubCat && a && category.subCategoryList != ''" class="subContainer">
             <div v-for="(subCategory,indexSub) in category.subCategoryList">
                 <SubCategory
                         :sub-category="subCategory"
                         :index-cat="index"
                         :index-sub-cat="indexSub"
+                        @updateCatalog="throwingAnEvent"
                 ></SubCategory>
             </div>
         </div>
 
-        <div v-if="profileCat === 'active'">
+        <div v-if="profileCat === 'active' && isVisibleSubCat && a">
             <div class="left" v-if="addSub">
-                <input v-model="textNewSubCategory"/>
+                <input placeholder="Введите имя подкатегории" style="outline: none" v-model="textNewSubCategory"/>
             </div>
             <v-btn elevation="1"
-                   outlined
                    small
+                   color="primary"
                    @click="addSubCat"
             >
                 {{btnNewSubCategory}}
@@ -53,6 +54,7 @@
 
 <script>
     import SubCategory from "./SubCategory.vue";
+    import {mapMutations} from 'vuex';
 
     export default {
         name: "Category",
@@ -71,7 +73,8 @@
                 addSub: false,
                 edit: false,
                 editText: 'Редакт.',
-                btnNewSubCategory: 'Добавить подкат.',
+                btnNewSubCategory: 'Добавить подкатегорию',
+                btnNewProd: 'Добавить товар',
                 textNewSubCategory: ''
             }
         },
@@ -86,7 +89,8 @@
                     }).then(value => {
                             console.log(value.body.message);
                         }, value => console.log(value)
-                    )
+                    );
+                    this.$emit('updateCatalog');
                 } else {
                     this.edit = true;
                     this.editText = 'Сохр.';
@@ -95,23 +99,14 @@
             addSubCat() {
                 if (this.addSub) {
                     this.btnNewSubCategory = 'Добавить подкат.';
-                    // this.$resource("/security/createSubCategory").save({}, {
-                    //     id: this.idCat,
-                    //     name: this.textNewSubCategory
-                    // }).then(value => {
-                    //         console.log(value.body.message);
-                    //     }, value => console.log(value)
-                    // )
                     this.$http.get("/security/createSubCategory", {
                         params: {
                             id: this.idCat,
                             name: this.textNewSubCategory
                         }
-                    }).then(value => {
-                            console.log(value.body.message);
-                        }, value => console.log(value)
-                    )
+                    }).then(value => console.log(value.body.message), value => console.log(value))
                     this.addSub = false;
+                    this.$emit('updateCatalog');
                 } else {
                     this.addSub = true;
                     this.btnNewSubCategory = 'Сохранить';
@@ -123,7 +118,33 @@
                             console.log(value.body);
                         }, value => console.log(value.body)
                     )
+                    this.$emit('updateCatalog');
                 }
+            },
+            checkProdOrSub(indexCat) {
+                if (this.category.products == '' && this.category.subCategoryList == '') {
+                    this.setIDCat({indexCat})
+                    this.a = true;
+                }
+                if (this.category.products != '') {
+                    this.setIDCat({indexCat});
+                    this.a = false;
+                }
+                if (this.category.subCategoryList != '') {
+                    this.a = !this.a;
+                }
+            },
+            ...mapMutations([
+                "setIDCatAndSubCat",
+                "setIDCat"
+            ]),
+            throwingAnEvent(){
+                this.$emit('updateCatalog');
+            }
+        },
+        computed: {
+            isVisibleSubCat() {
+                return this.category.products == '';
             }
         }
     }

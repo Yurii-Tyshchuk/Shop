@@ -15,14 +15,15 @@
             <v-btn
                     small
                     @click="Click"
-                    >Выбрать фото
+            >Выбрать фото
             </v-btn>
             <v-btn small color="red" @click="deleteImg" class="btn">X</v-btn>
         </div>
 
         <div class="Text">
             <input placeholder="Введите имя продукта" class="data" type="text" v-model="nameProd"/>
-            <textarea style="outline: none;" placeholder="Описание продукта" class="data" type="text" v-model="description"/>
+            <textarea style="outline: none;" placeholder="Описание продукта" class="data" type="text"
+                      v-model="description"/>
             <input placeholder="Баллы если требуются" class="data" type="number" v-model="rating"/>
         </div>
         <v-btn small @click="saveProduct">Сохранить</v-btn>
@@ -31,6 +32,7 @@
 
 <script>
     import imageCompression from 'browser-image-compression';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: "CreateCard",
@@ -67,27 +69,40 @@
             },
             saveProduct() {
                 let file = new FormData();
+                let url = "/security/upload";
                 file.append('file', this.file);
-                // file.append('data', object)
                 file.append('name', this.nameProd);
                 file.append('description', this.description);
-                file.append('subCategory', this.idSub);
-                file.append('rating', this.rating);
+                file.append('rating', this.rating === '' ? -1 : this.rating);
                 file.append('imgName', this.file.name);
 
-                this.$http.post("/security/upload", file, {
+                if (this.ProdFromCat && !this.ProdFromSubCat) {
+                    url = "/security/uploads";
+                    file.append('categoryy', this.idSub);
+                } else file.append('subCategory', this.idSub);
+
+
+                this.$http.post(url, file, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(value => {
                         console.log(value.body.message);
                     }, value => console.log(value)
-                )
+                );
+                this.$emit('updateCatalog')
             },
-            Click(){
+            Click() {
                 this.$refs.imgFiles.click();
             }
-
+        },
+        computed: {
+            ...mapGetters([
+                "IDCat",
+                "IDSubCat",
+                "ProdFromSubCat",
+                "ProdFromCat"
+            ]),
         }
     }
 </script>

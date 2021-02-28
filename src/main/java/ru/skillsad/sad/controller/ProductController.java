@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.skillsad.sad.domain.catalog.Product;
+import ru.skillsad.sad.domain.catalog.ProductFromCategory;
 import ru.skillsad.sad.domain.views.View;
+import ru.skillsad.sad.service.ProdFromCatService;
 import ru.skillsad.sad.service.ProdService;
 
 @RestController
@@ -17,13 +19,15 @@ import ru.skillsad.sad.service.ProdService;
 public class ProductController {
 
     private final ProdService prodService;
+    private final ProdFromCatService prodFromCatService;
 
-    public ProductController(ProdService prodService) {
+    public ProductController(ProdService prodService, ProdFromCatService prodFromCatService) {
         this.prodService = prodService;
+        this.prodFromCatService = prodFromCatService;
     }
 
     @GetMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(View.IdAndNameAndImg.class)
+    @JsonView(View.IdAndName.class)
     public Product getProductById(@PathVariable String id) {
         return prodService.getById(id);
     }
@@ -31,6 +35,20 @@ public class ProductController {
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable String id) {
         Product productFromDb = prodService.getById(id);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + productFromDb.getImgName() + "\"")
+                .body(productFromDb.getImg());
+    }
+
+    @GetMapping(value = "/products/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @JsonView(View.IdAndName.class)
+    public ProductFromCategory getProductFromCategoryById(@PathVariable String id){
+        return prodFromCatService.getById(id);
+    }
+
+    @GetMapping("/downloads/{id}")
+    public ResponseEntity<byte[]> getFileAsProductFromCategory(@PathVariable String id) {
+        ProductFromCategory productFromDb = prodFromCatService.getById(id);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + productFromDb.getImgName() + "\"")
                 .body(productFromDb.getImg());

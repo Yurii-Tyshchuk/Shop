@@ -7,6 +7,7 @@
                     <Category :category="TreeCateg"
                               :index="index"
                               :id-cat="TreeCateg.id"
+                              @updateCatalog="getTreeList"
                     ></Category>
                 </div>
             </div>
@@ -15,10 +16,10 @@
             </div>
             <div>
                 <div style="float: left;" v-if="add">
-                    <input v-model="textNewCategory"/>
+                    <input placeholder="Введите имя категории" style="outline: none" v-model="textNewCategory"/>
                 </div>
                 <v-btn elevation="1"
-                       outlined
+                       color="primary"
                        small
                        v-show="profileCat == 'active'"
                        @click="addCat"
@@ -28,14 +29,14 @@
             </div>
         </div>
         <!--    Товар по 1 из каждой категории     -->
-        <div class="box2" v-if="!ProdFromSubCat && TreeList != ''">
+        <div class="box2" v-if="!ProdFromSubCat && !ProdFromCat && TreeList != ''">
             <div class="box3">
-                <div v-for="TreeCateg2 in TreeList">
-                    <div v-if="TreeCateg2.subCategoryList != ''">
-                        <div v-if="TreeCateg2.subCategoryList[0].products != ''">
-                            <Product :prod-id="TreeCateg2.subCategoryList[0].products[0].id"></Product>
-                        </div>
+                <div v-for="TreeCateg2 in TreeList" v-if="TreeCateg2.subCategoryList != ''">
+
+                    <div v-if="TreeCateg2.subCategoryList[0].products != ''">
+                        <Product :prod-id="TreeCateg2.subCategoryList[0].products[0].id"></Product>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -44,9 +45,25 @@
             <div class="box3">
                 <div v-if="profileCat === 'active'">
                     <CreateCard :id-sub="TreeList[this.IDCat].subCategoryList[this.IDSubCat].id"
-                                :name-sub="TreeList[this.IDCat].subCategoryList[this.IDSubCat].name"></CreateCard>
+                                :name-sub="TreeList[this.IDCat].subCategoryList[this.IDSubCat].name"
+                                @updateCatalog="getTreeList"
+                    ></CreateCard>
                 </div>
                 <div v-for="Product in TreeList[this.IDCat].subCategoryList[this.IDSubCat].products">
+                    <Product :prod-id="Product.id" @updateCatalog="getTreeList"></Product>
+                </div>
+            </div>
+        </div>
+        <!--   Товар конкретной категории     -->
+        <div class="box2" v-if="ProdFromCat && TreeList != ''">
+            <div class="box3">
+                <div v-if="profileCat === 'active'">
+                    <CreateCard :id-sub="TreeList[this.IDCat].id"
+                                :name-sub="TreeList[this.IDCat].name"
+                                @updateCatalog="getTreeList"
+                    ></CreateCard>
+                </div>
+                <div v-for="Product in TreeList[this.IDCat].products">
                     <Product :prod-id="Product.id" @updateCatalog="getTreeList"></Product>
                 </div>
             </div>
@@ -64,6 +81,14 @@
     //     {
     //         "id": 1,
     //         "name": "Яблоки",
+    //         "products": [
+    //             {
+    //                 "id": 1,
+    //                 "name": "Яблоко1",
+    //                 "description": "Описание1",
+    //                 "rating": 0
+    //              }
+    //         ]
     //         "subCategoryList": [
     //             {
     //                 "id": 1,
@@ -94,7 +119,7 @@
                 add: false,
                 b: true, //<- Появляется 1 товар каждой категории, при true
                 textNewCategory: '',
-                btnNewCategory: 'Добавить кат.',
+                btnNewCategory: 'Добавить категорию',
             }
         },
         methods: {
@@ -102,11 +127,12 @@
                 this.$http.get("/api/catalog")
                     .then(res => {
                         if (res.body) {
-                            function compare(a,b) {
+                            function compare(a, b) {
                                 if (a.name > b.name) return 1;
                                 if (a.name < b.name) return -1;
                                 return 0;
                             }
+
                             this.TreeList = _.sortBy(res.body, function (o) {
                                 return o.name;
                             })
@@ -146,7 +172,8 @@
             ...mapGetters([
                 "IDCat",
                 "IDSubCat",
-                "ProdFromSubCat"
+                "ProdFromSubCat",
+                "ProdFromCat"
             ]),
         }
     }

@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.skillsad.sad.domain.general.MainText;
 
 public interface MainTextRepo extends JpaRepository<MainText, Long> {
-    MainText findByText(String s);
     MainText getById(Long l);
 }

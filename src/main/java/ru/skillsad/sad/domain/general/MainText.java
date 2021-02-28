@@ -4,7 +4,6 @@ import lombok.Data;
 import ru.skillsad.sad.domain.BaseEntity;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -16,6 +15,12 @@ public class MainText extends BaseEntity {
 
     public MainText(String text) {
         this.text = text;
+
+    }
+
+    public MainText(String text, Long id) {
+        this.text = text;
+        super.setId(id);
     }
 
     public MainText() {

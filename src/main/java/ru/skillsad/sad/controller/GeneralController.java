@@ -17,7 +17,16 @@ public class GeneralController {
     public GeneralController(MainTextRepo mainTextRepo) {this.mainTextRepo = mainTextRepo;}
 
     @GetMapping(value = "/general", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Optional<MainText> getGeneralText() {
-        return mainTextRepo.findById(1L);
+    public MainText getGeneralText() {
+        return mainTextRepo.getById(1L) == null
+                ? new MainText("Нужно описание",1L)
+                : mainTextRepo.getById(1L);
+    }
+
+    @GetMapping(value = "/contact")
+    public MainText getContactText(){
+        return mainTextRepo.getById(2L) == null
+                ? new MainText("Нужно добавить контакты",2L)
+                : mainTextRepo.getById(2L);
     }
 }
