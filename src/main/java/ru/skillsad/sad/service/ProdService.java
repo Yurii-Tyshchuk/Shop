@@ -1,5 +1,6 @@
 package ru.skillsad.sad.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.skillsad.sad.domain.catalog.Product;
@@ -8,15 +9,10 @@ import ru.skillsad.sad.repository.ProductRepo;
 import ru.skillsad.sad.repository.SubCategoryRepo;
 
 @Service
+@AllArgsConstructor
 public class ProdService {
-
     private final ProductRepo productRepo;
     private final SubCategoryRepo subCategoryRepo;
-
-    public ProdService(ProductRepo productRepo, SubCategoryRepo subCategoryRepo) {
-        this.productRepo = productRepo;
-        this.subCategoryRepo = subCategoryRepo;
-    }
 
     @Transactional(readOnly = true)
     public Product getById(String id) {

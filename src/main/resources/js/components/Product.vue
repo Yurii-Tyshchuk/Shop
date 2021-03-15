@@ -40,7 +40,7 @@
         },
         methods: {
             getProduct() {
-                let url = this.ProdFromCat? '/api/products/{id}': '/api/product/{id}';
+                let url = this.Output == 3? '/api/products/{id}': '/api/product/{id}';
                 this.$resource(url).get({id: this.ProdId}).then(value => {
                         this.imgUrl = `${window.location.origin}/api/download/${this.ProdId}`;
 
@@ -75,8 +75,7 @@
         },
         computed: {
             ...mapGetters([
-                "ProdFromSubCat",
-                "ProdFromCat"
+                "Output"
             ]),
         }
     }

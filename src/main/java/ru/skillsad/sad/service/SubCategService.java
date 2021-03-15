@@ -1,5 +1,6 @@
 package ru.skillsad.sad.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.skillsad.sad.domain.catalog.Category;
@@ -8,14 +9,10 @@ import ru.skillsad.sad.repository.CategoryRepo;
 import ru.skillsad.sad.repository.SubCategoryRepo;
 
 @Service
+@AllArgsConstructor
 public class SubCategService {
     private final SubCategoryRepo subCategoryRepo;
     private final CategoryRepo categoryRepo;
-
-    public SubCategService(SubCategoryRepo subCategoryRepo, CategoryRepo categoryRepo) {
-        this.subCategoryRepo = subCategoryRepo;
-        this.categoryRepo = categoryRepo;
-    }
 
     @Transactional
     public void editSubCategory(SubCategory subCategory){

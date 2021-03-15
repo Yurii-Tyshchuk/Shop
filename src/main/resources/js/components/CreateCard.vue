@@ -76,7 +76,7 @@
                 file.append('rating', this.rating === '' ? -1 : this.rating);
                 file.append('imgName', this.file.name);
 
-                if (this.ProdFromCat && !this.ProdFromSubCat) {
+                if (this.Output == 3) {
                     url = "/security/uploads";
                     file.append('categoryy', this.idSub);
                 } else file.append('subCategory', this.idSub);
@@ -100,8 +100,7 @@
             ...mapGetters([
                 "IDCat",
                 "IDSubCat",
-                "ProdFromSubCat",
-                "ProdFromCat"
+                "Output"
             ]),
         }
     }

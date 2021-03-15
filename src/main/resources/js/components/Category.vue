@@ -5,7 +5,7 @@
                 <input v-model="category.name"/>
             </div>
             <div class="left" v-else>
-                <p style="cursor: pointer;" @click="checkProdOrSub(index)">{{category.name}}</p>
+                <p style="cursor: pointer;" @click="checkProdOrSub">{{category.name}}</p>
             </div>
             <div v-if="profileCat ==='active'">
                 <v-btn elevation="1"
@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div v-if="isVisibleSubCat && a && category.subCategoryList != ''" class="subContainer">
+        <div v-if="isVisibleSubCat" class="subContainer">
             <div v-for="(subCategory,indexSub) in category.subCategoryList">
                 <SubCategory
                         :sub-category="subCategory"
@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div v-if="profileCat === 'active' && isVisibleSubCat && a">
+        <div v-if="profileCat === 'active' && isVisibleSubCat">
             <div class="left" v-if="addSub">
                 <input placeholder="Введите имя подкатегории" style="outline: none" v-model="textNewSubCategory"/>
             </div>
@@ -69,7 +69,6 @@
         data() {
             return {
                 profileCat: profile,
-                a: true,
                 addSub: false,
                 edit: false,
                 editText: 'Редакт.',
@@ -121,30 +120,33 @@
                     this.$emit('updateCatalog');
                 }
             },
-            checkProdOrSub(indexCat) {
+            checkProdOrSub() {
+                if (this.category.subCategoryList != '') { //Если товары из подкатегории
+                    this.setOutput({Output: 2});
+                    this.setIDCat({indexCat: this.index});
+                } else if (this.category.products != '') { //Если товары из категории
+                    this.setOutput({Output: 3});
+                    this.setIDCat({indexCat: this.index});
+                }
                 if (this.category.products == '' && this.category.subCategoryList == '') {
-                    this.setIDCat({indexCat})
-                    this.a = true;
+                    this.setOutput({Output: 3});
+                    this.setIDCat({indexCat: this.index});
                 }
-                if (this.category.products != '') {
-                    this.setIDCat({indexCat});
-                    this.a = false;
-                }
-                if (this.category.subCategoryList != '') {
-                    this.a = !this.a;
-                }
+            },
+            throwingAnEvent() {
+                this.$emit('updateCatalog');
             },
             ...mapMutations([
                 "setIDCatAndSubCat",
+                "setOutput",
                 "setIDCat"
-            ]),
-            throwingAnEvent(){
-                this.$emit('updateCatalog');
-            }
+            ])
         },
         computed: {
             isVisibleSubCat() {
-                return this.category.products == '';
+                return (this.category.products == ''
+                    && this.category.subCategoryList == '')
+                    || this.category.products == '';
             }
         }
     }

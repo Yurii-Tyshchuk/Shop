@@ -3,6 +3,7 @@ package ru.skillsad.sad.controller.security;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import ru.skillsad.sad.domain.general.MainText;
 import ru.skillsad.sad.exception.ResponseTemp;
 import ru.skillsad.sad.repository.MainTextRepo;
@@ -25,7 +26,6 @@ public class GenController {
         MainText textFromDB = mainTextRepo.getById(Long.valueOf(id)) == null
                 ? new MainText()
                 : mainTextRepo.getById(Long.valueOf(id));
-
         textFromDB.setText(text.getText());
         mainTextRepo.save(textFromDB);
         return new ResponseEntity<>(new ResponseTemp("Отредактировано под ид = " + id), HttpStatus.OK);
