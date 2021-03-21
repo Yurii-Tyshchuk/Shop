@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @RestControllerAdvice
@@ -18,6 +19,7 @@ public class ExceptionAdviceController {
 
     /**
      * Отвечает за обратку исключений при записи в бд
+     *
      * @return Json с параметром message в котором будет краткое описание ошибки
      */
     @ExceptionHandler(ConstraintViolationException.class)
@@ -51,5 +53,10 @@ public class ExceptionAdviceController {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ResponseTemp> requestParamValidException(MissingServletRequestParameterException ex) {
         return new ResponseEntity<>(new ResponseTemp(ex.getParameterName() + " <= Пустой или что нибудь еще"), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ResponseTemp> userNullException(NoSuchElementException ex) {
+        return new ResponseEntity<>(new ResponseTemp(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }

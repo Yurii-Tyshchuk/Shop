@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.skillsad.sad.domain.catalog.Product;
 import ru.skillsad.sad.domain.catalog.ProductFromCategory;
+import ru.skillsad.sad.domain.views.NoImgFormDB;
 import ru.skillsad.sad.domain.views.View;
 import ru.skillsad.sad.service.ProdFromCatService;
 import ru.skillsad.sad.service.ProdService;
@@ -27,9 +28,8 @@ public class ProductController {
     }
 
     @GetMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(View.IdAndName.class)
-    public Product getProductById(@PathVariable String id) {
-        return prodService.getById(id);
+    public NoImgFormDB getProductById(@PathVariable String id) {
+        return prodService.getByIdExceptImg(id);
     }
 
     @GetMapping("/download/{id}")
@@ -41,9 +41,8 @@ public class ProductController {
     }
 
     @GetMapping(value = "/products/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(View.IdAndName.class)
-    public ProductFromCategory getProductFromCategoryById(@PathVariable String id){
-        return prodFromCatService.getById(id);
+    public NoImgFormDB getProductFromCategoryById(@PathVariable String id){
+        return prodFromCatService.getByIdExceptImg(id);
     }
 
     @GetMapping("/downloads/{id}")

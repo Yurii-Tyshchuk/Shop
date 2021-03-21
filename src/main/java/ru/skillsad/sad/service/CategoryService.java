@@ -3,10 +3,12 @@ package ru.skillsad.sad.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.skillsad.sad.domain.catalog.Category;
+import ru.skillsad.sad.domain.views.CategoryExceptImg;
 import ru.skillsad.sad.repository.CategoryRepo;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -32,7 +34,8 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public List<Category> getAllCategory() {
-        return categoryRepo.findAll();
+    public List<CategoryExceptImg> getAllCategory() {
+        return categoryRepo.getAllByIdIsNotNull();
+//                .orElseThrow(() -> new NoSuchElementException("В категориях ничего нету"));
     }
 }

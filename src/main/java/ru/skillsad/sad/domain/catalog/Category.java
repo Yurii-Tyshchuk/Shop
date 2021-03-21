@@ -12,17 +12,36 @@ import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
-//@NamedEntityGraph(name = "test",
-//        attributeNodes = @NamedAttributeNode("name"),
-//        subgraphs = {
-//                @NamedSubgraph(
-//                        name = "SubTest",
-//                        attributeNodes = {
-//                                @NamedAttributeNode("name")
-//                        }
-//                )
-//        })
 
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "testGraphs",
+                attributeNodes = {
+                        @NamedAttributeNode("id"),
+                        @NamedAttributeNode("name"),
+                        @NamedAttributeNode(value = "products", subgraph = "category.products"),
+                        @NamedAttributeNode(value = "subCategoryList", subgraph = "category.subCategoryList")
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "category.products",
+                                attributeNodes = {
+                                        @NamedAttributeNode("id"),
+                                        @NamedAttributeNode("name"),
+                                        @NamedAttributeNode("description"),
+                                        @NamedAttributeNode("rating")
+                                }
+                        ),
+                        @NamedSubgraph(
+                                name = "category.subCategoryList",
+                                attributeNodes = {
+                                        @NamedAttributeNode("id"),
+                                        @NamedAttributeNode("name"),
+                                        @NamedAttributeNode(value = "products", subgraph = "subCategoryList.products"),
+                                }
+                        )
+                }
+        )
+})
 @Entity
 @Data
 public class Category extends BaseEntity {
@@ -47,11 +66,6 @@ public class Category extends BaseEntity {
 
     public Category(@NotBlank String name) {
         this.name = name;
-    }
-
-    public Category(@NotBlank String name, List<SubCategory> subCategoryList) {
-        this.name = name;
-        this.subCategoryList = subCategoryList;
     }
 
     public void addSubCategory(SubCategory subCategory) {

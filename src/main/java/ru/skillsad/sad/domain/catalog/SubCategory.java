@@ -2,6 +2,8 @@ package ru.skillsad.sad.domain.catalog;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import ru.skillsad.sad.domain.BaseEntity;
 import ru.skillsad.sad.domain.views.View;
 
@@ -10,6 +12,26 @@ import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "subCategoryList.products",
+                attributeNodes = {
+                        @NamedAttributeNode("id"),
+                        @NamedAttributeNode("name"),
+                        @NamedAttributeNode(value = "products", subgraph = "SubCategory.products"),
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "SubCategory.products",
+                                attributeNodes = {
+                                        @NamedAttributeNode("id"),
+                                        @NamedAttributeNode("name"),
+                                        @NamedAttributeNode("description"),
+                                        @NamedAttributeNode("rating")
+                                })
+                }
+        )
+})
 @Entity
 @Data
 public class SubCategory extends BaseEntity {
@@ -23,14 +45,15 @@ public class SubCategory extends BaseEntity {
     private Category category;
 
     @JsonView(View.IdAndName.class)
-    @OneToMany(orphanRemoval = true,mappedBy = "subCategory",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true, mappedBy = "subCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Product> products = new ArrayList<>();
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         products.add(product);
         product.setSubCategory(this);
     }
-    public void removeProduct(Product product){
+
+    public void removeProduct(Product product) {
         products.remove(product);
         product.setSubCategory(null);
     }

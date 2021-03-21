@@ -10,11 +10,11 @@
   "author": "Yurii",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
     "browser-image-compression": "^1.0.14",
+    "file-loader": "^6.2.0",
     "lodash": "^4.17.20",
+    "path": "^0.12.7",
     "vue": "^2.6.12",
-    "vue-axios": "^3.2.4",
     "vue-lodash": "^2.1.2",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.5.1",
