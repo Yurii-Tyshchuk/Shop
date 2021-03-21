@@ -10,7 +10,6 @@
                         small
                         @click="edit">{{button}}
                 </v-btn>
-                <label>{{ error }}</label>
             </div>
         </div>
     </div>
@@ -35,18 +34,18 @@
                     });
             },
             edit() {
-                if (this.text.edit) {
+                if (!this.text.edit) {
                     this.text.edit = true;
                     this.button = 'Сохранить';
                 } else {
                     this.text.edit = false;
-                    this.button = 'Редактировать';
+                    this.button = 'Редактировать описание';
                     this.$resource("/security/editConOrMainText/1").save({}, {
                         id: 0,
                         text: this.text.textBody.text
                     }).then(value => {
                             console.log(value)
-                        }, value => this.error = value.body.message
+                        }, value => console.log(value)
                     )
                 }
             }

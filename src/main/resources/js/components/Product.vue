@@ -4,7 +4,7 @@
         <div class="containerText">
             <h2 class="TitleProd">{{prodBody.name}}</h2>
             <span style="white-space: pre-line;">{{prodBody.description}}</span><br>
-            <span v-if="prodBody.rating !== -1">Баллы: {{prodBody.rating}}</span><br>
+            <span v-if="prodBody.rating != -1">Баллы: {{prodBody.rating}}</span><br>
             <v-btn elevation="1"
                    small
                    @click="getContact"
@@ -30,6 +30,7 @@
         name: "Product",
         props: {
             ProdId: Number,
+            ProdName: String
         },
         data() {
             return {
@@ -40,9 +41,9 @@
         },
         methods: {
             getProduct() {
-                let url = this.Output == 3? '/api/products/{id}': '/api/product/{id}';
+                let url = this.Output == 3 ? '/api/products/{id}' : '/api/product/{id}';
                 this.$resource(url).get({id: this.ProdId}).then(value => {
-                        this.imgUrl = `${window.location.origin}/api/download/${this.ProdId}`;
+                        this.imgUrl = `${window.location.origin}/api/download${this.Output == 3 ? 's' : ''}/${this.ProdId}`;
 
                         // this.imgUrl = URL.createObjectURL(new Blob([value.body.img], {type: "image/png"}));
                         // this.imgUrl = value.body.img;
@@ -56,7 +57,8 @@
             },
             deleteProduct() {
                 if (confirm("Вы уверены, что хотите удалить товара?")) {
-                    this.$resource("/security/delete/{id}").get({id: this.ProdId}).then(value => {
+                    let url = this.Output == 3 ? '/security/deletes/{id}' : '/security/delete/{id}';
+                    this.$resource(url).get({id: this.ProdId}).then(value => {
                         console.log(value.body)
                     }, reason => {
                         console.log(reason.body)
@@ -71,6 +73,9 @@
         watch: {
             ProdId(old, newProps) {
                 this.getProduct();
+            },
+            ProdName(old, newProps) {
+                this.getProduct();
             }
         },
         computed: {
@@ -82,14 +87,17 @@
 </script>
 
 <style scoped>
-    img {
-        width: 100%;
-        height: 100%;
+    .card img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 200px;
+        height: 200px;
     }
 
     .card {
         padding: 10px;
-        height: auto;
+        height: 330px;
         width: 230px;
         outline: 1px solid black;
     }

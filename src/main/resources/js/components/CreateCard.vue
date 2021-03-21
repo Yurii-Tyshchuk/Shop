@@ -3,6 +3,7 @@
         <div v-if="image !=''">
             <img :src="image" alt="123">
         </div>
+
         <input type="file"
                id="imageUpload"
                ref="imgFiles"
@@ -21,11 +22,11 @@
         </div>
 
         <div class="Text">
-            <input placeholder="Введите имя продукта" class="data" type="text" v-model="nameProd"/>
-            <textarea style="outline: none;" placeholder="Описание продукта" class="data" type="text"
-                      v-model="description"/>
+            <input placeholder="Введите имя продукта" maxlength="23" class="data" type="text" v-model="nameProd"/>
+            <input placeholder="Описание продукта" maxlength="23" class="data" type="text" v-model="description"/>
             <input placeholder="Баллы если требуются" class="data" type="number" v-model="rating"/>
         </div>
+
         <v-btn small @click="saveProduct">Сохранить</v-btn>
     </div>
 </template>
@@ -109,7 +110,7 @@
 <style scoped>
     .card {
         padding: 10px;
-        height: auto;
+        height: 330px;
         width: 230px;
         outline: 2px solid black;
     }
@@ -118,7 +119,7 @@
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
 
-    img {
+    .card img {
         width: 200px;
         height: 200px;
     }
@@ -132,11 +133,15 @@
         padding: 2px 8px;
     }
 
+    .Text area {
+
+    }
     .hide {
         display: none;
     }
 
     .data {
+        outline: none;
 
     }
 </style>

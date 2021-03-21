@@ -35,7 +35,7 @@
                     });
             },
             edit() {
-                if (this.text.edit) {
+                if (!this.text.edit) {
                     this.text.edit = true;
                     this.button = 'Сохранить';
                 } else {

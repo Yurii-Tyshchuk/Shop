@@ -18,6 +18,9 @@ export default new Vuex.Store({
         setIDCat(state, payload) {
             state.IndexCat = payload.indexCat;
         },
+        setIDSubCat(state, payload) {
+            state.IndexSubCat = payload.indexSubCat;
+        },
         setOutput(state, payload) {
             state.Output = payload.Output
         }

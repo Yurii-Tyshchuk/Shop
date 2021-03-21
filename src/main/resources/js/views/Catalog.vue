@@ -37,17 +37,20 @@
                             <div v-if="CatObj.subCategoryList[0].products != ''">
                                 <SubCard :prod-id="CatObj.subCategoryList[0].products[0].id"
                                          :cat-name="CatObj.name"
-                                         :counts="CatObj.subCategoryList.length"
+                                         :coun="CatObj.subCategoryList.length"
                                          :index-cat="index"
                                          :get-from-sub="true"
+                                         :call-product="false"
                                 ></SubCard>
                             </div>
                         </div>
                         <div v-if="CatObj.products !=''">
                             <SubCard :prod-id="CatObj.products[0].id"
                                      :cat-name="CatObj.name"
-                                     :counts="CatObj.products.length"
+                                     :coun="CatObj.products.length"
+                                     :index-cat="index"
                                      :get-from-sub="false"
+                                     :call-product="true"
                             ></SubCard>
                         </div>
                     </div>
@@ -62,8 +65,10 @@
                                     @updateCatalog="getTreeList"
                         ></CreateCard>
                     </div>
-                    <div v-for="Product in CategoryList[this.IDCat].subCategoryList[this.IDSubCat].products">
-                        <Product :prod-id="Product.id" @updateCatalog="getTreeList"></Product>
+                    <div v-for="Product in CategoryList[this.IDCat].subCategoryList[this.IDSubCat].products" v-if="Product">
+                        <Product :prod-id="Product.id"
+                                 :prod-name="Product.name"
+                                 @updateCatalog="getTreeList"></Product>
                     </div>
                 </div>
             </div>
@@ -71,12 +76,14 @@
             <!--    При нажатии на категорию, будет выводить подкат.    -->
             <div v-if="Output === 2">
                 <div class="box3">
-                    <div v-for="subCategory in CategoryList[this.IDCat].subCategoryList">
+                    <div v-for="(subCategory,index) in CategoryList[this.IDCat].subCategoryList">
                         <div v-if="subCategory.products != ''">
                             <SubCard :prod-id="subCategory.products[0].id"
                                      :cat-name="subCategory.name"
-                                     :counts="subCategory.products.length"
+                                     :index-sub-cat="index"
+                                     :coun="subCategory.products.length"
                                      :get-from-sub="true"
+                                     :call-product="true"
                             ></SubCard>
                         </div>
                     </div>
@@ -93,7 +100,9 @@
                         ></CreateCard>
                     </div>
                     <div v-for="Product in CategoryList[this.IDCat].products">
-                        <Product :prod-id="Product.id" @updateCatalog="getTreeList"></Product>
+                        <Product :prod-id="Product.id"
+                                 :prod-name="Product.name"
+                                 @updateCatalog="getTreeList"></Product>
                     </div>
                 </div>
             </div>

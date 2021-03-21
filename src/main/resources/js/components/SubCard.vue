@@ -2,21 +2,24 @@
     <div class="card">
         <img class="ImgStyle" :src="imgURL"/>
         <div class="containerText">
-            <h2 class="TitleProd" @click="CallProd">{{CatName}} ({{Counts}})</h2>
+            <h2 class="TitleProd" style="cursor: pointer;" @click="CallProd">{{CatName}} ({{count}})</h2>
         </div>
     </div>
 </template>
 
 <script>
+    import {mapMutations} from "vuex";
+
     export default {
         name: "SubCard",
         props: {
             ProdId: Number,
             CatName: String,
-            Counts: Number,
+            coun: Number,
             getFromSub: Boolean,
             indexCat: Number,
-            indexSubCat: Number
+            indexSubCat: Number,
+            callProduct: Boolean
         },
         data() {
             return {
@@ -26,19 +29,34 @@
             }
         },
         methods: {
-            CallProd(){
-                //1 subcat
-
-
-
-                //3 cat
-            }
+            CallProd() {
+                if (this.callProduct && !this.getFromSub) {
+                    this.setOutput({Output: 3});
+                    this.setIDCat({indexCat: this.indexCat});
+                }
+                if (!this.callProduct && this.getFromSub) {
+                    this.setOutput({Output: 2});
+                    this.setIDCat({indexCat: this.indexCat});
+                }
+                if (this.callProduct && this.getFromSub) {
+                    this.setOutput({Output: 1});
+                    this.setIDSubCat({indexSubCat: this.indexSubCat});
+                }
+            },
+            ...mapMutations([
+                "setIDCat",
+                "setOutput",
+                "setIDSubCat"
+            ])
         },
         created() {
         },
         computed: {
             imgURL() {
                 return `${window.location.origin}/api/download${this.getFromSub ? '' : 's'}/${this.ProdId}`;
+            },
+            count(){
+                return this.coun;
             }
         }
     }
@@ -46,13 +64,16 @@
 
 <style scoped>
     img {
-        width: 100%;
-        height: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 200px;
+        height: 200px;
     }
 
     .card {
         padding: 10px;
-        height: auto;
+        height: 250px;
         width: 230px;
         outline: 1px solid black;
     }

@@ -38,6 +38,6 @@ public class ProdService {
     }
 
     private Supplier<NoSuchElementException> getNoSuchElementExceptionSupplier(String id) {
-        return () -> new NoSuchElementException("Не верно указан ИД тоавра из категории" + id);
+        return () -> new NoSuchElementException("Не верно указан ИД товара из категории " + id);
     }
 }
