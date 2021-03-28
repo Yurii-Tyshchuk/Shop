@@ -4,7 +4,7 @@
         <div class="containerText">
             <h2 class="TitleProd">{{prodBody.name}}</h2>
             <span style="white-space: pre-line;">{{prodBody.description}}</span><br>
-            <span v-if="prodBody.rating != -1">Баллы: {{prodBody.rating}}</span><br>
+            <span v-if="prodBody.rating != -1">Баллы: {{prodBody.rating /10}}</span><br>
             <v-btn elevation="1"
                    small
                    @click="getContact"
@@ -47,7 +47,7 @@
                         // this.imgUrl = URL.createObjectURL(new Blob([value.body.img], {type: "image/png"}));
                         // this.imgUrl = value.body.img;
                         // console.log(value.body.img);
-                        if(value.body.description === 'NaNiiii'){
+                        if (value.body.description === 'NaNiiii') {
                             value.body.description = '';
                         }
                         this.prodBody = value.body;

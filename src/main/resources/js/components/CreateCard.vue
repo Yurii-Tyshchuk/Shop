@@ -74,7 +74,7 @@
                 file.append('file', this.file);
                 file.append('name', this.nameProd);
                 file.append('description', this.description === '' ? 'NaNiiii' : this.description);
-                file.append('rating', this.rating === '' ? -1 : this.rating);
+                file.append('rating', this.rating == '' ? -1 : (this.rating * 10));
                 file.append('imgName', this.file.name);
 
                 if (this.Output == 3) {

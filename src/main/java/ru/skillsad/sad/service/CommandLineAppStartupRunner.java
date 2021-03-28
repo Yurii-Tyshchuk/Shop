@@ -52,7 +52,7 @@ public class CommandLineAppStartupRunner {
             SubCategory subCategory = new SubCategory("Груши-золотые");
 
             for (int i = 0; i < 20; i++) {
-                Product product = new Product("Груша", "Описание груши", (byte) 4, "1.jpg", bytes);
+                Product product = new Product("Груша", "Описание груши", (byte) 40, "1.jpg", bytes);
                 subCategory.addProduct(product);
             }
             category.addSubCategory(subCategory);
