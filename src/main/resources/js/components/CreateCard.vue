@@ -73,7 +73,7 @@
                 let url = "/security/upload";
                 file.append('file', this.file);
                 file.append('name', this.nameProd);
-                file.append('description', this.description);
+                file.append('description', this.description === '' ? 'NaNiiii' : this.description);
                 file.append('rating', this.rating === '' ? -1 : this.rating);
                 file.append('imgName', this.file.name);
 
@@ -89,9 +89,14 @@
                     }
                 }).then(value => {
                         console.log(value.body.message);
+                        this.$emit('updateCatalog');
+                        this.image = '';
+                        this.file = '';
+                        this.nameProd = '';
+                        this.description = '';
+                        this.rating = '';
                     }, value => console.log(value)
                 );
-                this.$emit('updateCatalog')
             },
             Click() {
                 this.$refs.imgFiles.click();
@@ -120,8 +125,13 @@
     }
 
     .card img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
         width: 200px;
         height: 200px;
+        border-radius: 10px;
+        object-fit: cover;
     }
 
     .btn {
@@ -136,6 +146,7 @@
     .Text area {
 
     }
+
     .hide {
         display: none;
     }

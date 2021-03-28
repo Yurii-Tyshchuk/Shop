@@ -87,9 +87,9 @@
                         name: nameFrom
                     }).then(value => {
                             console.log(value.body.message);
+                            this.$emit('updateCatalog');
                         }, value => console.log(value)
                     );
-                    this.$emit('updateCatalog');
                 } else {
                     this.edit = true;
                     this.editText = 'Сохр.';
@@ -103,9 +103,13 @@
                             id: this.idCat,
                             name: this.textNewSubCategory
                         }
-                    }).then(value => console.log(value.body.message), value => console.log(value))
+                    }).then(value => {
+                        console.log(value.body.message);
+                        this.$emit('updateCatalog');
+                        this.textNewSubCategory = '';
+                    }, value => console.log(value))
+
                     this.addSub = false;
-                    this.$emit('updateCatalog');
                 } else {
                     this.addSub = true;
                     this.btnNewSubCategory = 'Сохранить';
@@ -115,9 +119,9 @@
                 if (confirm("Вы уверены что хотите удалить категорию? Все её подкатегории и товары удалятся.")) {
                     this.$resource("/security/deleteCategory/{id}").get({id: id}).then(value => {
                             console.log(value.body);
+                            this.$emit('updateCatalog');
                         }, value => console.log(value.body)
                     )
-                    this.$emit('updateCatalog');
                 }
             },
             checkProdOrSub() {

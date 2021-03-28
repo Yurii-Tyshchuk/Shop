@@ -42,7 +42,7 @@ public class CommandLineAppStartupRunner {
         if (mainTextRepo.getById(1l) == null) {
             mainTextRepo.save(new MainText(MAIN_TEXT));
         }
-        if (subCategoryRepo.findByName("Груши-золотые") == null) {
+        if (categoryRepo.findByName("Груши") == null) {
             BufferedImage bImage = ImageIO.read(new ClassPathResource("CatWarrior.jpg").getInputStream());
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ImageIO.write(bImage, "jpg", bos);

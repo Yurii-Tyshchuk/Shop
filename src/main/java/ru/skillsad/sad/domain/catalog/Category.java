@@ -53,12 +53,12 @@ public class Category extends BaseEntity {
 
     @JsonView(View.IdAndName.class)
     @OneToMany(orphanRemoval = true, mappedBy = "categoryy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
+    @Fetch(FetchMode.SUBSELECT)
     private List<ProductFromCategory> products = new ArrayList<>();
 
     @JsonView(View.IdAndName.class)
     @OneToMany(orphanRemoval = true, mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
+    @Fetch(FetchMode.SUBSELECT)
     private List<SubCategory> subCategoryList = new ArrayList<>();
 
     public Category() {

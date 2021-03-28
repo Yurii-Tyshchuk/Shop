@@ -4,7 +4,8 @@
             <input v-model="subCategory.name"/>
         </div>
         <div v-else>
-            <p class="TextStl" style="cursor: pointer;" @click="getProdFromSubCat(indexCat,indexSubCat)">{{subCategory.name}}</p>
+            <p class="TextStl" style="cursor: pointer;" @click="getProdFromSubCat(indexCat,indexSubCat)">
+                {{subCategory.name}}</p>
         </div>
         <div v-if="profileCat ==='active'">
             <v-btn elevation="1"
@@ -54,10 +55,10 @@
                     this.$resource("/security/editSubCategory").save({}, {id: idFrom, name: nameFrom})
                         .then(value => {
                                 console.log(value.body.message);
+                                this.$emit('updateCatalog');
                             }, value => console.log(value)
                         )
                 }
-                this.$emit('updateCatalog');
             },
             getProdFromSubCat(indexCat, indexSubCat) {
                 this.setIDCatAndSubCat({
@@ -70,9 +71,9 @@
                 if (confirm("Вы уверены что хотите удалить подкатегорию? Все её товары удалятся.")) {
                     this.$resource("/security/deleteSubCategory/{id}").get({id: id}).then(value => {
                             console.log(value.body);
+                            this.$emit('updateCatalog');
                         }, value => console.log(value.body)
                     );
-                    this.$emit('updateCatalog');
                 }
             },
             ...mapMutations([

@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <img class="ImgStyle" :src="imgUrl"/>
+        <img :src="imgUrl"/>
         <div class="containerText">
             <h2 class="TitleProd">{{prodBody.name}}</h2>
             <span style="white-space: pre-line;">{{prodBody.description}}</span><br>
@@ -44,10 +44,12 @@
                 let url = this.Output == 3 ? '/api/products/{id}' : '/api/product/{id}';
                 this.$resource(url).get({id: this.ProdId}).then(value => {
                         this.imgUrl = `${window.location.origin}/api/download${this.Output == 3 ? 's' : ''}/${this.ProdId}`;
-
                         // this.imgUrl = URL.createObjectURL(new Blob([value.body.img], {type: "image/png"}));
                         // this.imgUrl = value.body.img;
                         // console.log(value.body.img);
+                        if(value.body.description === 'NaNiiii'){
+                            value.body.description = '';
+                        }
                         this.prodBody = value.body;
                     }, value => console.log(value.body)
                 )
@@ -59,11 +61,11 @@
                 if (confirm("Вы уверены, что хотите удалить товара?")) {
                     let url = this.Output == 3 ? '/security/deletes/{id}' : '/security/delete/{id}';
                     this.$resource(url).get({id: this.ProdId}).then(value => {
-                        console.log(value.body)
+                        console.log(value.body);
+                        this.$emit('updateCatalog');
                     }, reason => {
                         console.log(reason.body)
                     })
-                    this.$emit('updateCatalog')
                 }
             },
         },
@@ -93,6 +95,8 @@
         margin-right: auto;
         width: 200px;
         height: 200px;
+        border-radius: 10px;
+        object-fit: cover;
     }
 
     .card {
@@ -116,10 +120,5 @@
         text-transform: uppercase;
         font-family: Circe, sans-serif;
         margin: 0 15px
-    }
-
-    .ImgStyle {
-        border-radius: 10px;
-        /*margin: 0 15px;*/
     }
 </style>

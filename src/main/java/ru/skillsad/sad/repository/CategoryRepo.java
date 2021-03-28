@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CategoryRepo extends JpaRepository<Category, Long> {
     Category getById(Long id);
-
+    Category findByName(String name);
     //    @EntityGraph(value = "testGraphs",type = EntityGraphType.FETCH)
     List<CategoryExceptImg> getAllByIdIsNotNull();
 

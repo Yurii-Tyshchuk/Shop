@@ -71,7 +71,8 @@
                                     @updateCatalog="getTreeList"
                         ></CreateCard>
                     </div>
-                    <div v-for="Product in CategoryList[this.IDCat].subCategoryList[this.IDSubCat].products" v-if="Product">
+                    <div v-for="Product in CategoryList[this.IDCat].subCategoryList[this.IDSubCat].products"
+                         v-if="Product">
                         <Product :prod-id="Product.id"
                                  :prod-name="Product.name"
                                  @updateCatalog="getTreeList"></Product>
@@ -198,9 +199,10 @@
                         name: this.textNewCategory
                     }).then(value => {
                             console.log(value.body.message);
+                            this.getTreeList();
+                            this.textNewCategory = '';
                         }, value => console.log(value)
                     )
-                    this.getTreeList();
                 } else {
                     this.add = true;
                     this.btnNewCategory = 'Сохранить';

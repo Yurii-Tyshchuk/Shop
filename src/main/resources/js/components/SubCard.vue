@@ -1,6 +1,6 @@
 <template>
     <div class="card" @click="CallProd">
-        <img class="ImgStyle" :src="imgURL"/>
+        <img :src="imgURL"/>
         <div class="containerText">
             <h2 class="TitleProd">{{CatName}} ({{count}})</h2>
         </div>
@@ -63,12 +63,14 @@
 </script>
 
 <style scoped>
-    img {
+    .card img {
         display: block;
         margin-left: auto;
         margin-right: auto;
         width: 200px;
         height: 200px;
+        border-radius: 10px;
+        object-fit: cover;
     }
 
     .card {
@@ -93,10 +95,5 @@
         text-transform: uppercase;
         font-family: Circe, sans-serif;
         margin: 0 15px
-    }
-
-    .ImgStyle {
-        border-radius: 10px;
-        /*margin: 0 15px;*/
     }
 </style>
