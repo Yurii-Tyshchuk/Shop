@@ -2,6 +2,9 @@
     <div class="containerCat">
         <!--    Категории     -->
         <div class="box1">
+            <div>
+                <h2 class="HeadProd">Наши товары</h2>
+            </div>
             <div v-if="CategoryList != ''">
                 <div v-for="(CategObj,index) in CategoryList" class="cont">
                     <Category :category="CategObj"
@@ -29,6 +32,9 @@
             </div>
         </div>
         <div class="box2" v-if="CategoryList != ''">
+            <div>
+                <h2 class="HeadProd">{{HeaderText}}</h2>
+            </div>
             <!--    При первом выводе каталога   -->
             <div v-if="Output === 0">
                 <div class="box3">
@@ -72,7 +78,6 @@
                     </div>
                 </div>
             </div>
-
             <!--    При нажатии на категорию, будет выводить подкат.    -->
             <div v-if="Output === 2">
                 <div class="box3">
@@ -89,7 +94,6 @@
                     </div>
                 </div>
             </div>
-
             <!--   Товар конкретной категории     -->
             <div v-if="Output === 3">
                 <div class="box3">
@@ -210,7 +214,8 @@
             ...mapGetters([
                 "IDCat",
                 "IDSubCat",
-                "Output"
+                "Output",
+                "HeaderText"
             ]),
         }
     }
@@ -223,6 +228,7 @@
     }
 
     .containerCat {
+        padding-top: 25px;
         display: grid;
         grid-template-columns: 1fr 3fr;
     }
@@ -250,5 +256,14 @@
     .cont {
         display: flex;
         flex-direction: column;
+    }
+
+    .HeadProd {
+        font-family: "Open Sans", sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 50px;
+        width: 100%;
     }
 </style>

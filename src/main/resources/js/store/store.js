@@ -7,7 +7,8 @@ export default new Vuex.Store({
     state: {
         IndexCat: 0,
         IndexSubCat: 0,
-        Output: 0
+        Output: 0,
+        HeaderText: "Саженцы",
     },
     mutations: {
         setIDCatAndSubCat(state, payload) {
@@ -23,6 +24,9 @@ export default new Vuex.Store({
         },
         setOutput(state, payload) {
             state.Output = payload.Output
+        },
+        setHeaderText(state, payload) {
+            state.HeaderText = payload.HeaderText;
         }
     },
     actions: {},
@@ -30,6 +34,7 @@ export default new Vuex.Store({
         IDCat: state => state.IndexCat,
         IDSubCat: state => state.IndexSubCat,
         Output: state => state.Output,
+        HeaderText: state => state.HeaderText,
     },
     modules: {}
 });

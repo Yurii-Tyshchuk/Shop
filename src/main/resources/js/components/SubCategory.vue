@@ -4,7 +4,7 @@
             <input v-model="subCategory.name"/>
         </div>
         <div v-else>
-            <span style="cursor: pointer;" @click="getProdFromSubCat(indexCat,indexSubCat)">{{subCategory.name}}</span>
+            <p class="TextStl" style="cursor: pointer;" @click="getProdFromSubCat(indexCat,indexSubCat)">{{subCategory.name}}</p>
         </div>
         <div v-if="profileCat ==='active'">
             <v-btn elevation="1"
@@ -64,6 +64,7 @@
                     indexCat,
                     indexSubCat
                 })
+                this.setHeaderText({HeaderText: this.subCategory.name});
             },
             deleteSubCat(id) {
                 if (confirm("Вы уверены что хотите удалить подкатегорию? Все её товары удалятся.")) {
@@ -75,7 +76,8 @@
                 }
             },
             ...mapMutations([
-                "setIDCatAndSubCat"
+                "setIDCatAndSubCat",
+                "setHeaderText"
             ])
         }
     }
@@ -92,5 +94,13 @@
 
     .TextSubCat div {
         display: inline-block;
+    }
+
+    .TextStl {
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        width: 100%;
+        font-family: Circe, sans-serif;
     }
 </style>

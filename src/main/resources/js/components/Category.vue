@@ -5,7 +5,7 @@
                 <input v-model="category.name"/>
             </div>
             <div class="left" v-else>
-                <p style="cursor: pointer;" @click="checkProdOrSub">{{category.name}}</p>
+                <p class="TextStl" style="cursor: pointer;" @click="checkProdOrSub">{{category.name}}</p>
             </div>
             <div v-if="profileCat ==='active'">
                 <v-btn elevation="1"
@@ -132,6 +132,8 @@
                     this.setOutput({Output: 3});
                     this.setIDCat({indexCat: this.index});
                 }
+                this.setHeaderText({HeaderText: this.category.name})
+
             },
             throwingAnEvent() {
                 this.$emit('updateCatalog');
@@ -139,7 +141,8 @@
             ...mapMutations([
                 "setIDCatAndSubCat",
                 "setOutput",
-                "setIDCat"
+                "setIDCat",
+                "setHeaderText"
             ])
         },
         computed: {
@@ -164,5 +167,13 @@
         padding-bottom: 10px;
         /*padding-right: 10px;*/
         /*margin-left: 20px;*/
+    }
+
+    .TextStl {
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        width: 100%;
+        font-family: Circe, sans-serif;
     }
 </style>

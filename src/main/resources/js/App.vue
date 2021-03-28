@@ -3,7 +3,8 @@
         <div class="head">
                 <div class="head-Address">
                     Адрес <br>
-                    Какой-то адрес и еще текст
+                    Лен. обл., Приозерский район, пос.Мельнико, <br>
+                    ул. Ленинградская 43.
                 </div>
                 <div class="head-mainText">
                     Опытный сад<br>
@@ -12,8 +13,8 @@
                 </div>
                 <div class="phone">
                     <div class="phone-Back">
-                        <a href="tel:8999999999" style="margin-bottom: 8px;">+7(999)999-99-99</a>
-                        <a href="tel:8999999999">+7(999)999-99-99</a>
+                        <a href="tel:89215741003" style="margin-bottom: 8px;">+7(921)574-10-03</a>
+                        <a href="tel:89213932386">+7(921)393-23-86</a>
                     </div>
                 </div>
         </div>
@@ -32,12 +33,10 @@
                 </v-toolbar-items>
                 <v-spacer></v-spacer>
             </v-toolbar>
-
             <div class="MAIN">
                 <router-view></router-view>
                 <router-view name="two"></router-view>
             </div>
-
         </v-app>
     </div>
 </template>
@@ -55,6 +54,8 @@
     .MAIN {
         max-width: 1200px;
         z-index: 1;
+        padding-left: 2%;
+        padding-right: 2%;
     }
 
     .Main_Bar {

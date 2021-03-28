@@ -1,8 +1,8 @@
 <template>
-    <div class="card">
+    <div class="card" @click="CallProd">
         <img class="ImgStyle" :src="imgURL"/>
         <div class="containerText">
-            <h2 class="TitleProd" style="cursor: pointer;" @click="CallProd">{{CatName}} ({{count}})</h2>
+            <h2 class="TitleProd">{{CatName}} ({{count}})</h2>
         </div>
     </div>
 </template>
@@ -76,6 +76,7 @@
         height: 250px;
         width: 230px;
         outline: 1px solid black;
+        cursor: pointer;
     }
 
     .card:hover {

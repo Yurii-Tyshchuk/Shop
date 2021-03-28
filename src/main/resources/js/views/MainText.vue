@@ -2,8 +2,8 @@
     <div class="containerMainText">
         <div class="boxMainText">
             <textarea v-if="text.edit" v-model="text.textBody.text"></textarea>
-            <label v-else>{{ text.textBody.text }}</label>
-            <div v-if="profile == 'active'">
+            <label style="white-space: pre-line;" v-else>{{ text.textBody.text }}</label>
+            <div style="text-align:center;" v-if="profile == 'active'">
                 <v-btn
                         elevation="1"
                         outlined

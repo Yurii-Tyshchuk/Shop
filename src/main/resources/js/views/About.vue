@@ -2,7 +2,7 @@
     <div class="containerContact">
         <div class="boxContact">
             <textarea v-if="text.edit" v-model="text.textBody.text"></textarea>
-            <label v-else>{{ text.textBody.text }}</label>
+            <label style="white-space: pre-line;" v-else>{{ text.textBody.text }}</label>
             <div v-if="profile == 'active'">
                 <v-btn
                         elevation="1"
@@ -58,5 +58,13 @@
 </script>
 
 <style scoped>
+    textarea {
+        width: 650px;
+        height: 600px;
+    }
 
+    .containerContact {
+        display: flex;
+        justify-content: center;
+    }
 </style>
