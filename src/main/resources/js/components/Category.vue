@@ -1,6 +1,6 @@
 <template>
     <div class="subContainer">
-        <div>
+        <div class="TEst1">
             <div class="left" v-if="edit">
                 <input v-model="category.name"/>
             </div>
@@ -167,8 +167,9 @@
     .subContainer {
         display: flex;
         flex-direction: column;
-        float: left;
-        padding-bottom: 10px;
+        margin-left: 1.5em;
+        /*float: left;*/
+        /*padding-bottom: 10px;*/
         /*padding-right: 10px;*/
         /*margin-left: 20px;*/
     }
@@ -179,5 +180,9 @@
         text-align: center;
         width: 100%;
         font-family: Circe, sans-serif;
+    }
+
+    .TEst1 {
+        width: auto;
     }
 </style>

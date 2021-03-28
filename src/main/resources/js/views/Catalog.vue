@@ -5,7 +5,7 @@
             <div>
                 <h2 class="HeadProd">Наши товары</h2>
             </div>
-            <div v-if="CategoryList != ''">
+            <div class="CatCenter" v-if="CategoryList != ''">
                 <div v-for="(CategObj,index) in CategoryList" class="cont">
                     <Category :category="CategObj"
                               :index="index"
@@ -17,8 +17,8 @@
             <div v-else>
                 Нет категорий
             </div>
-            <div>
-                <div style="float: left;" v-if="add">
+            <div style="margin-left: 3em;">
+                <div v-if="add">
                     <input placeholder="Введите имя категории" style="outline: none" v-model="textNewCategory"/>
                 </div>
                 <v-btn elevation="1"
@@ -267,5 +267,9 @@
         text-align: center;
         margin-bottom: 50px;
         width: 100%;
+    }
+
+    .CatCenter {
+        margin-left: 1.5em;
     }
 </style>

@@ -88,7 +88,7 @@
     .TextSubCat {
         white-space: nowrap;
         float: left;
-        padding-left: 10px;
+        /*padding-left: 10px;*/
         /*text-align: left;*/
         /*white-space: nowrap*/
     }
@@ -98,6 +98,8 @@
     }
 
     .TextStl {
+        margin-left: auto;
+        margin-right: auto;
         font-size: 16px;
         font-weight: 700;
         text-align: center;
