@@ -67,6 +67,7 @@
             },
             deleteImg() {
                 this.image = '';
+                this.file = '';
             },
             saveProduct() {
                 let file = new FormData();
