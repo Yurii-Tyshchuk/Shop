@@ -2,12 +2,11 @@ package ru.skillsad.sad.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.skillsad.sad.domain.catalog.Product;
 import ru.skillsad.sad.domain.catalog.SubCategory;
 import ru.skillsad.sad.domain.views.NoImgFormDB;
-import ru.skillsad.sad.repository.ProductRepo;
-import ru.skillsad.sad.repository.SubCategoryRepo;
+import ru.skillsad.sad.repository.catalog.ProductRepo;
+import ru.skillsad.sad.repository.catalog.SubCategoryRepo;
 
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
@@ -23,7 +22,7 @@ public class ProdService {
                 .orElseThrow(getNoSuchElementExceptionSupplier(id));
     }
 
-    public Product getById(String id){
+    public Product getById(String id) {
         return productRepo.findById(Long.valueOf(id))
                 .orElseThrow(getNoSuchElementExceptionSupplier(id));
     }

@@ -1,7 +1,6 @@
 package ru.skillsad.sad.domain;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import ru.skillsad.sad.domain.catalog.Category;
 import ru.skillsad.sad.domain.views.View;
 
 import javax.persistence.GeneratedValue;
@@ -16,6 +15,9 @@ public abstract class BaseEntity {
     @JsonView(View.Id.class)
     private Long id;
 
+    public BaseEntity() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -24,4 +26,7 @@ public abstract class BaseEntity {
         this.id = id;
     }
 
+    public abstract String getName();
+
+    public abstract void setName(String name);
 }

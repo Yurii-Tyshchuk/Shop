@@ -1,10 +1,10 @@
 package ru.skillsad.sad.domain.catalog;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import lombok.Getter;
+import lombok.Setter;
 import ru.skillsad.sad.domain.BaseEntity;
+import ru.skillsad.sad.domain.BottomEntity;
 import ru.skillsad.sad.domain.views.View;
 
 import javax.persistence.*;
@@ -33,7 +33,8 @@ import java.util.List;
         )
 })
 @Entity
-@Data
+@Getter
+@Setter
 public class SubCategory extends BaseEntity {
 
     @JsonView(View.IdAndName.class)
@@ -63,10 +64,5 @@ public class SubCategory extends BaseEntity {
 
     public SubCategory(@NotBlank String name) {
         this.name = name;
-    }
-
-    public SubCategory(@NotBlank String name, Category category) {
-        this.name = name;
-        this.category = category;
     }
 }

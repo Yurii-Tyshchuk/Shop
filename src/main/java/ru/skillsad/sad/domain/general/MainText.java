@@ -1,14 +1,22 @@
 package ru.skillsad.sad.domain.general;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
-import ru.skillsad.sad.domain.BaseEntity;
+import ru.skillsad.sad.domain.views.View;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
 @Entity
 @Data
-public class MainText extends BaseEntity {
+public class MainText {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.Id.class)
+    private Long id;
 
     @Size(max = 3000)
     private String text;
@@ -20,7 +28,7 @@ public class MainText extends BaseEntity {
 
     public MainText(String text, Long id) {
         this.text = text;
-        super.setId(id);
+        this.id = id;
     }
 
     public MainText() {

@@ -6,8 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.skillsad.sad.domain.catalog.SubCategory;
 import ru.skillsad.sad.exception.ResponseTemp;
-import ru.skillsad.sad.repository.CategoryRepo;
-import ru.skillsad.sad.repository.SubCategoryRepo;
 import ru.skillsad.sad.service.SubCategService;
 
 import javax.validation.Valid;

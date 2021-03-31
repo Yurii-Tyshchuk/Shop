@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.skillsad.sad.domain.catalog.Category;
 import ru.skillsad.sad.domain.catalog.ProductFromCategory;
 import ru.skillsad.sad.domain.views.NoImgFormDB;
-import ru.skillsad.sad.repository.CategoryRepo;
-import ru.skillsad.sad.repository.ProductFromCategoryRepo;
+import ru.skillsad.sad.repository.catalog.CategoryRepo;
+import ru.skillsad.sad.repository.catalog.ProductFromCategoryRepo;
 
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
@@ -30,7 +30,6 @@ public class ProdFromCatService {
     public void deleteProduct(String id) {
         ProductFromCategory product = productFromCategoryRepo.findById(Long.valueOf(id))
                 .orElseThrow(getNoSuchElementExceptionSupplier(id));
-
         Category category = product.getCategoryy();
         category.removeProduct(product);
         categoryRepo.save(category);

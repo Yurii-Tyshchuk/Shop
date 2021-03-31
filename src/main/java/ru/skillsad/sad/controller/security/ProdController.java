@@ -10,8 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skillsad.sad.domain.catalog.Product;
 import ru.skillsad.sad.domain.catalog.ProductFromCategory;
 import ru.skillsad.sad.exception.ResponseTemp;
-import ru.skillsad.sad.repository.ProductFromCategoryRepo;
-import ru.skillsad.sad.repository.ProductRepo;
+import ru.skillsad.sad.repository.catalog.ProductFromCategoryRepo;
+import ru.skillsad.sad.repository.catalog.ProductRepo;
 import ru.skillsad.sad.service.ProdFromCatService;
 import ru.skillsad.sad.service.ProdService;
 

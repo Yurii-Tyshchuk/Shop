@@ -1,17 +1,16 @@
-package ru.skillsad.sad.repository;
+package ru.skillsad.sad.repository.catalog;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import ru.skillsad.sad.domain.catalog.Category;
 import ru.skillsad.sad.domain.views.CategoryExceptImg;
+import ru.skillsad.sad.repository.CommonAbstractRepository;
 
 import java.util.List;
 
-public interface CategoryRepo extends JpaRepository<Category, Long> {
+@Repository
+public interface CategoryRepo extends CommonAbstractRepository<Category> {
     Category getById(Long id);
-    Category findByName(String name);
     //    @EntityGraph(value = "testGraphs",type = EntityGraphType.FETCH)
     List<CategoryExceptImg> getAllByIdIsNotNull();
-
-//    @Query(value="SELECT s.id,s.name, array_agg(d), array_agg(f) FROM category s,sub_category d,product f GROUP BY s.id",nativeQuery = true)
-//    List<Category> test();
 }

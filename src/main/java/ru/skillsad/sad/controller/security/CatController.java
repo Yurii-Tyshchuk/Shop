@@ -22,21 +22,21 @@ public class CatController {
 
     @PostMapping(value = "/editCategory")
     public ResponseEntity<ResponseTemp> editCategory(@Valid @RequestBody Category category) {
-        categoryService.editCategory(category);
+        categoryService.updateName(category);
         log.warn("Была отредактирована категория");
         return new ResponseEntity<>(new ResponseTemp("Данные изменены"), HttpStatus.OK);
     }
 
     @GetMapping(value = "/deleteCategory/{id}")
     public ResponseEntity<ResponseTemp> deleteCategory(@Valid @PathVariable String id) {
-        categoryService.deleteCategory(id);
+        categoryService.deleteById(id);
         log.warn("Была удалена категория");
         return new ResponseEntity<>(new ResponseTemp("Данные удалены " + id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/createCategory")
     public ResponseEntity<ResponseTemp> createCategory(@Valid @RequestBody Category category) {
-        categoryService.createCategory(category);
+        categoryService.create(category);
         log.warn("Была создана категория");
         return new ResponseEntity<>(new ResponseTemp("Категория создана"), HttpStatus.OK);
     }

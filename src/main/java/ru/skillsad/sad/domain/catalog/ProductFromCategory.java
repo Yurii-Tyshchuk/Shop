@@ -2,7 +2,10 @@ package ru.skillsad.sad.domain.catalog;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import ru.skillsad.sad.domain.BaseEntity;
+import ru.skillsad.sad.domain.BottomEntity;
 import ru.skillsad.sad.domain.views.View;
 
 import javax.persistence.Entity;
@@ -14,7 +17,8 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class ProductFromCategory extends BaseEntity implements Serializable {
 
     @JsonView(View.IdAndName.class)

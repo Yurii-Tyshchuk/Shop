@@ -1,10 +1,13 @@
 package ru.skillsad.sad.domain.catalog;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import ru.skillsad.sad.domain.BaseEntity;
+import ru.skillsad.sad.domain.BottomEntity;
+import ru.skillsad.sad.domain.RemoveAndCreate;
 import ru.skillsad.sad.domain.views.View;
 
 import javax.persistence.*;
@@ -43,7 +46,8 @@ import java.util.List;
         )
 })
 @Entity
-@Data
+@Getter
+@Setter
 public class Category extends BaseEntity {
 
     @JsonView(View.IdAndName.class)
