@@ -39,15 +39,7 @@ public class ProdController {
     @Transactional
     public ResponseEntity<ResponseTemp> upload(@RequestPart("file") MultipartFile file,
                                                @ModelAttribute Product product) {
-        try {
-            product.setImg(file.getBytes());
-            productRepo.save(product);
-            return new ResponseEntity<>(new ResponseTemp("Картинка загружена"), HttpStatus.OK);
-        } catch (IOException e) {
-            return new ResponseEntity<>(
-                    new ResponseTemp("Не удалось загрузить => " + file.getOriginalFilename()),
-                    HttpStatus.CONFLICT);
-        }
+        return prodService.createProduct(file,product);
     }
 
     @PostMapping(
@@ -57,15 +49,7 @@ public class ProdController {
     @Transactional
     public ResponseEntity<ResponseTemp> uploadToCategory(@RequestPart("file") MultipartFile file,
                                                          @ModelAttribute ProductFromCategory product) {
-        try {
-            product.setImg(file.getBytes());
-            productFromCategoryRepo.save(product);
-            return new ResponseEntity<>(new ResponseTemp("Картинка загружена"), HttpStatus.OK);
-        } catch (IOException e) {
-            return new ResponseEntity<>(
-                    new ResponseTemp("Не удалось загрузить => " + file.getOriginalFilename()),
-                    HttpStatus.CONFLICT);
-        }
+        return prodFromCatService.createProduct(file,product);
     }
 
     @GetMapping("/delete/{id}")
