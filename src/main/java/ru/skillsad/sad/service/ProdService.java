@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skillsad.sad.domain.catalog.Product;
 import ru.skillsad.sad.domain.catalog.SubCategory;
@@ -31,7 +32,7 @@ public class ProdService {
         return productRepo.findById(Long.valueOf(id))
                 .orElseThrow(getNoSuchElementExceptionSupplier(id));
     }
-
+    @Transactional
     public void deleteProduct(String id) {
         Product product = productRepo.findById(Long.valueOf(id))
                 .orElseThrow(getNoSuchElementExceptionSupplier(id));
@@ -40,7 +41,7 @@ public class ProdService {
         subCategory.removeProduct(product);
         subCategoryRepo.save(subCategory);
     }
-
+    @Transactional
     public ResponseEntity<ResponseTemp> createProduct(MultipartFile file, Product product) {
         try {
             product.setImg(file.getBytes());

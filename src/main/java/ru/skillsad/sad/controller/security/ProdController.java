@@ -36,7 +36,6 @@ public class ProdController {
             value = "/upload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             headers = "Content-Type= multipart/form-data")
-    @Transactional
     public ResponseEntity<ResponseTemp> upload(@RequestPart("file") MultipartFile file,
                                                @ModelAttribute Product product) {
         return prodService.createProduct(file,product);
@@ -46,21 +45,18 @@ public class ProdController {
             value = "/uploads",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             headers = "Content-Type= multipart/form-data")
-    @Transactional
     public ResponseEntity<ResponseTemp> uploadToCategory(@RequestPart("file") MultipartFile file,
                                                          @ModelAttribute ProductFromCategory product) {
         return prodFromCatService.createProduct(file,product);
     }
 
     @GetMapping("/delete/{id}")
-    @Transactional
     public ResponseEntity<ResponseTemp> deleteProduct(@PathVariable String id) {
         prodService.deleteProduct(id);
         return new ResponseEntity<>(new ResponseTemp("Товар удален"), HttpStatus.OK);
     }
 
     @GetMapping("/deletes/{id}")
-    @Transactional
     public ResponseEntity<ResponseTemp> deleteProductFromCategory(@PathVariable String id) {
         prodFromCatService.deleteProduct(id);
         return new ResponseEntity<>(new ResponseTemp("Товар удален"), HttpStatus.OK);
