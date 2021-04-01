@@ -6,15 +6,29 @@ import ru.skillsad.sad.domain.catalog.Category;
 import ru.skillsad.sad.domain.views.CategoryExceptImg;
 import ru.skillsad.sad.repository.catalog.CategoryRepo;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
-public class CategoryService extends AbstractServiceForTopEntity<Category, CategoryRepo> {
+public class CategoryService {
+
     private final CategoryRepo categoryRepo;
 
-    public CategoryService(CategoryRepo categoryRepo) {
-        super(categoryRepo, Category::new);
-        this.categoryRepo = categoryRepo;
+    public CategoryService(CategoryRepo categoryRepo) {this.categoryRepo = categoryRepo;}
+
+    @Transactional
+    public void editCategory(Category category) {
+        Category categoryFromDb = categoryRepo.getById(category.getId());
+        categoryFromDb.setName(category.getName());
+        categoryRepo.save(categoryFromDb);
+    }
+
+    public void deleteCategory(String id) {
+        categoryRepo.deleteById(Long.valueOf(id));
+    }
+
+    public void createCategory(@Valid Category category) {
+        categoryRepo.save(new Category(category.getName()));
     }
 
     @Transactional(readOnly = true)

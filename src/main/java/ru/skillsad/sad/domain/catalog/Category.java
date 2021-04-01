@@ -48,7 +48,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Category extends BaseEntity {
+public class Category extends BaseEntity implements RemoveAndCreate<Category,ProductFromCategory> {
 
     @JsonView(View.IdAndName.class)
     @Column(unique = true)
@@ -91,4 +91,5 @@ public class Category extends BaseEntity {
         products.remove(product);
         product.setCategoryy(null);
     }
+
 }

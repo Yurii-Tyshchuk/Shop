@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-public class Product extends BaseEntity implements Serializable{
+public class Product extends BaseEntity implements Serializable, BottomEntity<SubCategory>{
     @JsonView(View.IdAndName.class)
     @NotBlank(message = "Имя продукта не может быть пустым")
     private String name;
@@ -69,5 +69,15 @@ public class Product extends BaseEntity implements Serializable{
         this.rating = rating;
         this.imgName = imgName;
         this.img = img;
+    }
+
+    @Override
+    public SubCategory getUpEntity() {
+        return subCategory;
+    }
+
+    @Override
+    public void setUpEntity(SubCategory entity) {
+        this.subCategory = entity;
     }
 }

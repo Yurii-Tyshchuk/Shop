@@ -1,9 +1,7 @@
 package ru.skillsad.sad.domain;
 
-import java.util.List;
+public interface RemoveAndCreate<T extends BaseEntity, B extends BaseEntity & BottomEntity<T>> {
+    public void removeProduct(B product);
 
-public interface RemoveAndCreate {
-    public void removeEntityFromThisEntity(List<? extends BottomEntity<?>> entity);
-
-    public void createEntityInsideThisEntity(List<? extends BaseEntity> entity);
+    public void addProduct(B product);
 }

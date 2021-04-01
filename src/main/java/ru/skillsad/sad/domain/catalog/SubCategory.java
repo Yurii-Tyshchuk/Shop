@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import ru.skillsad.sad.domain.BaseEntity;
-import ru.skillsad.sad.domain.BottomEntity;
+import ru.skillsad.sad.domain.RemoveAndCreate;
 import ru.skillsad.sad.domain.views.View;
 
 import javax.persistence.*;
@@ -35,7 +35,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class SubCategory extends BaseEntity {
+public class SubCategory extends BaseEntity implements RemoveAndCreate<SubCategory, Product> {
 
     @JsonView(View.IdAndName.class)
     @NotBlank(message = "Имя подкатегории не должно быть пустым")

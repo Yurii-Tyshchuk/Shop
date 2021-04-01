@@ -7,6 +7,6 @@ import ru.skillsad.sad.domain.BaseEntity;
 import java.util.Optional;
 
 @NoRepositoryBean
-public interface CommonAbstractRepository<E extends BaseEntity> extends JpaRepository<E,Long> {
+public interface CommonRepository<E extends BaseEntity> extends JpaRepository<E,Long> {
     Optional<E> findByName(String name);
 }

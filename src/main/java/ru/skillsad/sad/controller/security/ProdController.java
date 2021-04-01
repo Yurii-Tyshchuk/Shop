@@ -10,24 +10,16 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skillsad.sad.domain.catalog.Product;
 import ru.skillsad.sad.domain.catalog.ProductFromCategory;
 import ru.skillsad.sad.exception.ResponseTemp;
-import ru.skillsad.sad.repository.catalog.ProductFromCategoryRepo;
-import ru.skillsad.sad.repository.catalog.ProductRepo;
 import ru.skillsad.sad.service.ProdFromCatService;
 import ru.skillsad.sad.service.ProdService;
-
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/security")
 public class ProdController {
-    private final ProductRepo productRepo;
-    private final ProductFromCategoryRepo productFromCategoryRepo;
     private final ProdService prodService;
     private final ProdFromCatService prodFromCatService;
 
-    public ProdController(ProductRepo productRepo, ProductFromCategoryRepo productFromCategoryRepo, ProdService prodService, ProdFromCatService prodFromCatService) {
-        this.productRepo = productRepo;
-        this.productFromCategoryRepo = productFromCategoryRepo;
+    public ProdController(ProdService prodService, ProdFromCatService prodFromCatService) {
         this.prodService = prodService;
         this.prodFromCatService = prodFromCatService;
     }
@@ -39,33 +31,16 @@ public class ProdController {
     @Transactional
     public ResponseEntity<ResponseTemp> upload(@RequestPart("file") MultipartFile file,
                                                @ModelAttribute Product product) {
-        try {
-            product.setImg(file.getBytes());
-            productRepo.save(product);
-            return new ResponseEntity<>(new ResponseTemp("Картинка загружена"), HttpStatus.OK);
-        } catch (IOException e) {
-            return new ResponseEntity<>(
-                    new ResponseTemp("Не удалось загрузить => " + file.getOriginalFilename()),
-                    HttpStatus.CONFLICT);
-        }
+        return prodService.createProduct(file, product);
     }
 
     @PostMapping(
             value = "/uploads",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             headers = "Content-Type= multipart/form-data")
-    @Transactional
     public ResponseEntity<ResponseTemp> uploadToCategory(@RequestPart("file") MultipartFile file,
                                                          @ModelAttribute ProductFromCategory product) {
-        try {
-            product.setImg(file.getBytes());
-            productFromCategoryRepo.save(product);
-            return new ResponseEntity<>(new ResponseTemp("Картинка загружена"), HttpStatus.OK);
-        } catch (IOException e) {
-            return new ResponseEntity<>(
-                    new ResponseTemp("Не удалось загрузить => " + file.getOriginalFilename()),
-                    HttpStatus.CONFLICT);
-        }
+        return prodFromCatService.createProduct(file, product);
     }
 
     @GetMapping("/delete/{id}")

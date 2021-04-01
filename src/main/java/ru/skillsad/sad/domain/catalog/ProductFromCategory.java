@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-public class ProductFromCategory extends BaseEntity implements Serializable {
+public class ProductFromCategory extends BaseEntity implements Serializable, BottomEntity<Category> {
 
     @JsonView(View.IdAndName.class)
     @NotBlank(message = "Имя продукта не может быть пустым")
@@ -47,5 +47,15 @@ public class ProductFromCategory extends BaseEntity implements Serializable {
     private byte[] img;
 
     public ProductFromCategory() {
+    }
+
+    @Override
+    public Category getUpEntity() {
+        return categoryy;
+    }
+
+    @Override
+    public void setUpEntity(Category entity) {
+        this.categoryy = entity;
     }
 }
