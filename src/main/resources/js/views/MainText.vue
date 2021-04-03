@@ -2,7 +2,7 @@
     <div class="containerMainText">
         <div class="boxMainText">
             <textarea v-if="text.edit" v-model="text.textBody.text"></textarea>
-            <label style="white-space: pre-line;" v-else>{{ text.textBody.text }}</label>
+            <label style="white-space: pre-wrap;" v-else>{{ text.textBody.text }}</label>
             <div style="text-align:center;" v-if="profile == 'active'">
                 <v-btn
                         elevation="1"

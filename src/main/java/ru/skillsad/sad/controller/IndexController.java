@@ -18,9 +18,8 @@ public class IndexController {
     @Value("${spring.profiles.active:prod}")
     private String profile;
 
-    public IndexController(CommandLineAppStartupRunner runner) throws Exception {
+    public IndexController(CommandLineAppStartupRunner runner) {
         this.runner = runner;
-        this.runner.runUser();
     }
 
     @GetMapping()
@@ -32,7 +31,10 @@ public class IndexController {
             model.addAttribute("profile", "null");
         }
         model.addAttribute("isDevMode", "dev".equals(profile));
-        if ("dev".equals(profile)) runner.run();
+        if ("dev".equals(profile)) {
+            runner.run();
+            runner.runUser();
+        }
         return "index";
     }
 
