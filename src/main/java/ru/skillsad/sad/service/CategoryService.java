@@ -38,6 +38,6 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public List<CategoryExceptImg> getAllCategory() {
-        return categoryRepo.getAll().collect(Collectors.toList());
+        return categoryRepo.getAll();
     }
 }
