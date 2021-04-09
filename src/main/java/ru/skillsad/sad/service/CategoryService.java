@@ -8,8 +8,11 @@ import ru.skillsad.sad.repository.CategoryRepo;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
+/**
+ * @author Yurii Ty
+ */
 @Service
 @Transactional
 public class CategoryService {
@@ -35,7 +38,6 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public List<CategoryExceptImg> getAllCategory() {
-        return categoryRepo.getAllByIdIsNotNull();
-//                .orElseThrow(() -> new NoSuchElementException("В категориях ничего нету"));
+        return categoryRepo.getAll().collect(Collectors.toList());
     }
 }

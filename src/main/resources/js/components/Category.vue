@@ -13,7 +13,7 @@
                        small
                        @click="editCategory(category.id,category.name)"
                 >
-                    {{ editText }}
+                    {{editText}}
                 </v-btn>
                 <v-btn
                         color="error"

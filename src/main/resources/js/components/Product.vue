@@ -2,23 +2,42 @@
     <div class="card">
         <img :src="imgUrl"/>
         <div class="containerText">
-            <h2 class="TitleProd">{{prodBody.name}}</h2>
-            <span style="white-space: pre-line;">{{prodBody.description}}</span><br>
-            <span v-if="prodBody.rating != -1">Баллы: {{prodBody.rating /10}}</span><br>
-            <v-btn elevation="1"
-                   small
-                   @click="getContact"
-                   color="success"
-            >
-                Узнать
-            </v-btn>
-            <v-btn v-if="profile === 'active'" elevation="1"
-                   small
-                   @click="deleteProduct"
-                   color="error"
-            >
-                Удалить
-            </v-btn>
+            <div v-if="edit">
+                <input type="text" v-model="prodBody.name"/>
+                <input type="text" v-model="prodBody.description"/>
+                <input type="number" v-model="prodBody.rating"/>
+            </div>
+            <div v-else>
+                <h2 class="TitleProd">{{prodBody.name}}</h2>
+                <span style="white-space: pre-line;">{{prodBody.description}}</span><br>
+                <span v-if="prodBody.rating != -1">Баллы: {{prodBody.rating /10}}</span><br>
+            </div>
+            <div class="buttons">
+                <v-btn elevation="1"
+                       small
+                       @click="getContact"
+                       color="success"
+                       class="button_action"
+                >
+                    Узнать
+                </v-btn>
+                <v-btn v-if="profile === 'active'" elevation="1"
+                       small
+                       @click="deleteProduct"
+                       color="error"
+                       class="button_action"
+                >
+                    Удалить
+                </v-btn>
+                <v-btn v-if="profile === 'active'" elevation="1"
+                       small
+                       @click="editProduct"
+                       color="primary"
+                       class="button_action"
+                >
+                    Ред.
+                </v-btn>
+            </div>
         </div>
     </div>
 </template>
@@ -36,7 +55,8 @@
             return {
                 profile: profile,
                 prodBody: '',
-                imgUrl: ''
+                imgUrl: '',
+                edit: false
             }
         },
         methods: {
@@ -68,6 +88,24 @@
                     })
                 }
             },
+            editProduct() {
+                if (this.edit) {
+                    let url = this.Output == 3 ? '/security/editt' : '/security/edit';
+                    this.$resource(url).save({}, {
+                        id: this.prodBody.id,
+                        name: this.prodBody.name,
+                        description: this.prodBody.description,
+                        rating: this.prodBody.rating
+                    }).then(value => {
+                            console.log(value.body.message);
+                            this.$emit('updateCatalog');
+                        }, value => console.log(value)
+                    )
+                    this.edit = false;
+                } else {
+                    this.edit = true;
+                }
+            }
         },
         created() {
             this.getProduct();
@@ -120,5 +158,19 @@
         text-transform: uppercase;
         font-family: Circe, sans-serif;
         margin: 0 15px
+    }
+
+    .buttons {
+        align-items: center;
+        width: 200px;
+        margin: 0 auto;
+        display: inline;
+    }
+
+    .button_action {
+        align-items: center;
+        display: inline-block;
+        width: calc(33% - 4px);
+        margin: 0 auto;
     }
 </style>

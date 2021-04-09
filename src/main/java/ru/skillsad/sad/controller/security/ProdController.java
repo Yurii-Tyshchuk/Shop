@@ -61,4 +61,16 @@ public class ProdController {
         prodFromCatService.deleteProduct(id);
         return new ResponseEntity<>(new ResponseTemp("Товар удален"), HttpStatus.OK);
     }
+
+    @PostMapping("/edit")
+    public ResponseEntity<ResponseTemp> editProduct(@RequestBody Product product){
+        prodService.editProduct(product);
+        return new ResponseEntity<>(new ResponseTemp("Товар изменен"), HttpStatus.OK);
+    }
+
+    @PostMapping("/editt")
+    public ResponseEntity<ResponseTemp> editProduct(@RequestBody ProductFromCategory product){
+        prodFromCatService.editProduct(product);
+        return new ResponseEntity<>(new ResponseTemp("Товар изменен"), HttpStatus.OK);
+    }
 }

@@ -32,6 +32,7 @@ public class ProdFromCatService {
         return productFromCategoryRepo.findById(Long.valueOf(id))
                 .orElseThrow(getNoSuchElementExceptionSupplier(id));
     }
+
     @Transactional
     public void deleteProduct(String id) {
         ProductFromCategory product = productFromCategoryRepo.findById(Long.valueOf(id))
@@ -41,6 +42,7 @@ public class ProdFromCatService {
         category.removeProduct(product);
         categoryRepo.save(category);
     }
+
     @Transactional
     public ResponseEntity<ResponseTemp> createProduct(MultipartFile file, ProductFromCategory product) {
         try {
@@ -52,6 +54,28 @@ public class ProdFromCatService {
                     new ResponseTemp("Не удалось загрузить => " + file.getOriginalFilename()),
                     HttpStatus.CONFLICT);
         }
+    }
+
+    public void editProduct(ProductFromCategory product) {
+        ProductFromCategory productFromDB = productFromCategoryRepo.findById(product.getId())
+                .orElseThrow(getNoSuchElementExceptionSupplier(product));
+
+        productFromDB.setName(product.getName());
+        productFromDB.setDescription(product.getDescription());
+        productFromDB.setRating(product.getRating());
+
+        Category category = categoryRepo.findById(productFromDB.getCategoryy().getId())
+                .orElseThrow(getNoSuchElementExceptionSupplier(product));
+
+        category.addProduct(productFromDB);
+        categoryRepo.save(category);
+    }
+
+    private Supplier<NoSuchElementException> getNoSuchElementExceptionSupplier(ProductFromCategory product) {
+        return () -> new NoSuchElementException(
+                String.format("Не верно указан ид = %s, при редактировании товара %s",
+                        product.getId(),
+                        product.getName()));
     }
 
     private Supplier<NoSuchElementException> getNoSuchElementExceptionSupplier(String id) {

@@ -58,7 +58,7 @@
 </script>
 
 <style scoped>
-    textarea {
+    .boxContact textarea {
         width: 650px;
         height: 600px;
     }
