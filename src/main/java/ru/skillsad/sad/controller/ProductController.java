@@ -1,6 +1,5 @@
 package ru.skillsad.sad.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -8,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import ru.skillsad.sad.domain.catalog.Product;
 import ru.skillsad.sad.domain.catalog.ProductFromCategory;
 import ru.skillsad.sad.domain.views.NoImgFormDB;
-import ru.skillsad.sad.domain.views.View;
 import ru.skillsad.sad.service.ProdFromCatService;
 import ru.skillsad.sad.service.ProdService;
 

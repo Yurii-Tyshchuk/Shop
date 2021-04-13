@@ -1,14 +1,15 @@
 package ru.skillsad.sad.service;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import ru.skillsad.sad.domain.catalog.Category;
 import ru.skillsad.sad.domain.views.CategoryExceptImg;
 import ru.skillsad.sad.repository.CategoryRepo;
-
-import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Yurii Ty

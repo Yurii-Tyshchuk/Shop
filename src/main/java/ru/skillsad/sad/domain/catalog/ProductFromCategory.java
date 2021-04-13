@@ -1,21 +1,23 @@
 package ru.skillsad.sad.domain.catalog;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import lombok.Data;
-import ru.skillsad.sad.domain.BaseEntity;
-import ru.skillsad.sad.domain.views.View;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import ru.skillsad.sad.domain.BaseEntity;
+import ru.skillsad.sad.domain.views.View;
 
 @Entity
 @Data
-public class ProductFromCategory extends BaseEntity implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+public class ProductFromCategory extends BaseEntity {
 
     @JsonView(View.IdAndName.class)
     @NotBlank(message = "Имя продукта не может быть пустым")

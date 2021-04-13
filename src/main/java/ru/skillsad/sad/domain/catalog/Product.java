@@ -1,18 +1,23 @@
 package ru.skillsad.sad.domain.catalog;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonView;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import ru.skillsad.sad.domain.BaseEntity;
 import ru.skillsad.sad.domain.views.View;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-
 @Entity
 @Data
-public class Product extends BaseEntity implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+public class Product extends BaseEntity {
     @JsonView(View.IdAndName.class)
     @NotBlank(message = "Имя продукта не может быть пустым")
     private String name;
@@ -41,12 +46,8 @@ public class Product extends BaseEntity implements Serializable {
     public Product() {
     }
 
-    public Product(@NotBlank String name,
-                   @NotBlank String description,
-                   SubCategory subCategory,
-                   @NotNull byte rating,
-                   @NotBlank String imgName,
-                   @NotNull byte[] img) {
+    public Product(@NotBlank String name, @NotBlank String description, SubCategory subCategory, @NotNull byte rating,
+            @NotBlank String imgName, @NotNull byte[] img) {
         this.name = name;
         this.description = description;
         this.subCategory = subCategory;
@@ -56,10 +57,9 @@ public class Product extends BaseEntity implements Serializable {
     }
 
     public Product(@NotBlank(message = "Имя продукта не может быть пустым") String name,
-                   @NotBlank(message = "Описание продукта не может быть пустым") String description,
-                   @NotNull(message = "Рейтинг продукта не может быть пустым") byte rating,
-                   @NotBlank(message = "Изображение продукта не может быть пустым") String imgName,
-                   @NotNull byte[] img) {
+            @NotBlank(message = "Описание продукта не может быть пустым") String description,
+            @NotNull(message = "Рейтинг продукта не может быть пустым") byte rating,
+            @NotBlank(message = "Изображение продукта не может быть пустым") String imgName, @NotNull byte[] img) {
         this.name = name;
         this.description = description;
         this.rating = rating;

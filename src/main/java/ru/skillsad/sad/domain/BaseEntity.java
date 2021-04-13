@@ -1,13 +1,13 @@
 package ru.skillsad.sad.domain;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import ru.skillsad.sad.domain.catalog.Category;
-import ru.skillsad.sad.domain.views.View;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import ru.skillsad.sad.domain.views.View;
 
 @MappedSuperclass
 public abstract class BaseEntity {

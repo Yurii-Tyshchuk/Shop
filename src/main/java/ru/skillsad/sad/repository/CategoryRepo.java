@@ -1,11 +1,11 @@
 package ru.skillsad.sad.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import ru.skillsad.sad.domain.catalog.Category;
 import ru.skillsad.sad.domain.views.CategoryExceptImg;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 public interface CategoryRepo extends JpaRepository<Category, Long> {
     Category getById(Long id);

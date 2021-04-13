@@ -1,16 +1,28 @@
 package ru.skillsad.sad.domain.catalog;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import ru.skillsad.sad.domain.BaseEntity;
-import ru.skillsad.sad.domain.views.View;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import ru.skillsad.sad.domain.BaseEntity;
+import ru.skillsad.sad.domain.views.View;
 
 
 @NamedEntityGraphs({
@@ -44,6 +56,7 @@ import java.util.List;
 })
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Category extends BaseEntity {
 
     @JsonView(View.IdAndName.class)
