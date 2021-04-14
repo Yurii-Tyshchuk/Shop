@@ -1,17 +1,29 @@
 package ru.skillsad.sad.domain.user;
 
-import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import ru.skillsad.sad.domain.BaseEntity;
-
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import ru.skillsad.sad.domain.BaseEntity;
 
 @Entity
 @Data
 @Table(name = "usrs")
+@EqualsAndHashCode(callSuper = false)
 public class User extends BaseEntity implements UserDetails {
 
     @Column(nullable = false)
