@@ -22,7 +22,7 @@ public class IndexController {
         this.runner = runner;
     }
 
-    @GetMapping()
+    @GetMapping("/")
     @Transactional
     public String main(Model model, @AuthenticationPrincipal User user) throws Exception {
         if (user != null) {
@@ -38,23 +38,19 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping({"/foto", "/about", "/contacts", "/service", "/articles"})
+    @Transactional
+    public String other(Model model, @AuthenticationPrincipal User user) {
+        return "redirect:/";
+    }
+
     @GetMapping("/Catalog")
-    public String Catalog(Model model, @AuthenticationPrincipal User user) throws Exception {
-        if (user != null) {
-            model.addAttribute("profile", "active");
-        } else {
-            model.addAttribute("profile", "null");
-        }
+    public String Catalog(Model model, @AuthenticationPrincipal User user) {
         return "redirect:/";
     }
 
     @GetMapping("/About")
-    public String About(Model model, @AuthenticationPrincipal User user) throws Exception {
-        if (user != null) {
-            model.addAttribute("profile", "active");
-        } else {
-            model.addAttribute("profile", "null");
-        }
+    public String About(Model model, @AuthenticationPrincipal User user) {
         return "redirect:/";
     }
 }
