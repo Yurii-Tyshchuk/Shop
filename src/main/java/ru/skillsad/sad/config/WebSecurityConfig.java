@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ru.skillsad.sad.service.UserSecurityService;
 
-//@EnableWebMvc
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -28,7 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                     .mvcMatchers("/", "/Catalog/**", "/About/**", "/api/**", "/webjars/**", "/js/**",
-                            "/Fruits.png", "/foto", "/about", "/contacts", "/service", "/articles")
+                            "/robot.txt",
+                            "/Fruits.png", "/foto/**", "/about/**", "/contacts/**", "/service/**", "/articles/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated()

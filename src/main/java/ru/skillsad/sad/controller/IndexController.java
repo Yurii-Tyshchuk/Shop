@@ -38,7 +38,7 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping({"/foto", "/about", "/contacts", "/service", "/articles"})
+    @GetMapping({"/foto/**", "/about/**", "/contacts/**", "/service/**", "/articles/**"})
     @Transactional
     public String other(Model model, @AuthenticationPrincipal User user) {
         return "redirect:/";

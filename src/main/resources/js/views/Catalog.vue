@@ -182,6 +182,7 @@
                             })
                             for (let i = 0; i < this.CategoryList.length; i++) {
                                 this.CategoryList[i].subCategoryList.sort(compare);
+                                this.CategoryList[i].products.sort(compare);
 
                                 for (let j = 0; j < this.CategoryList[i].subCategoryList.length; j++) {
                                     this.CategoryList[i].subCategoryList[j].products.sort(compare);
