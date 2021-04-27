@@ -59,8 +59,12 @@
 
 <style scoped>
     .boxContact textarea {
-        width: 650px;
-        height: 600px;
+        width: 830px;
+        height: 500px;
+    }
+    .boxContact {
+        width: 830px;
+        height: 500px;
     }
 
     .containerContact {
