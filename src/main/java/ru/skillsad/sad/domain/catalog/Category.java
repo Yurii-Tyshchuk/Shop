@@ -16,6 +16,8 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -55,8 +57,8 @@ import ru.skillsad.sad.domain.views.View;
         )
 })
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Setter
+@Getter
 public class Category extends BaseEntity {
 
     @JsonView(View.IdAndName.class)

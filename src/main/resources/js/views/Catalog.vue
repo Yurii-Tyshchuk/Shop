@@ -187,7 +187,7 @@
                                     this.CategoryList[i].subCategoryList[j].products.sort(compare);
                                 }
                             }
-                            console.log(this.CategoryList)
+                            // this.CategoryList.forEach(value => console.log(value));
                         }
                     });
             },

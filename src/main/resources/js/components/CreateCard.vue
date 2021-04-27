@@ -16,7 +16,9 @@
             <v-btn
                     small
                     @click="Click"
-            >Выбрать фото
+                    color="success"
+            >
+                Выбрать фото
             </v-btn>
             <v-btn small color="red" @click="deleteImg" class="btn">X</v-btn>
         </div>
@@ -27,7 +29,13 @@
             <input placeholder="Баллы если требуются" class="data" type="number" v-model="rating"/>
         </div>
 
-        <v-btn small @click="saveProduct">Сохранить</v-btn>
+        <v-btn
+                small
+                @click="saveProduct"
+                color="success"
+        >
+            Сохранить
+        </v-btn>
     </div>
 </template>
 

@@ -19,6 +19,8 @@ import ru.skillsad.sad.exception.ResponseTemp;
 import ru.skillsad.sad.service.ProdFromCatService;
 import ru.skillsad.sad.service.ProdService;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/security")
 public class ProdController {

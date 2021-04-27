@@ -11,12 +11,14 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import ru.skillsad.sad.domain.BaseEntity;
 import ru.skillsad.sad.domain.views.View;
 
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Setter
+@Getter
 public class ProductFromCategory extends BaseEntity {
 
     @JsonView(View.IdAndName.class)

@@ -13,6 +13,7 @@ import ru.skillsad.sad.exception.ResponseTemp;
 import ru.skillsad.sad.repository.CategoryRepo;
 import ru.skillsad.sad.repository.ProductFromCategoryRepo;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
@@ -63,12 +64,13 @@ public class ProdFromCatService {
         productFromDB.setName(product.getName());
         productFromDB.setDescription(product.getDescription());
         productFromDB.setRating(product.getRating());
+        productFromCategoryRepo.save(productFromDB);
 
-        Category category = categoryRepo.findById(productFromDB.getCategoryy().getId())
-                .orElseThrow(getNoSuchElementExceptionSupplier(product));
-
-        category.addProduct(productFromDB);
-        categoryRepo.save(category);
+//        Category category = categoryRepo.findById(productFromDB.getCategoryy().getId())
+//                .orElseThrow(getNoSuchElementExceptionSupplier(product));
+//
+//        category.addProduct(productFromDB);
+//        categoryRepo.save(category);
     }
 
     private Supplier<NoSuchElementException> getNoSuchElementExceptionSupplier(ProductFromCategory product) {

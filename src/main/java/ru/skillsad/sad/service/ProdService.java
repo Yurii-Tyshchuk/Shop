@@ -1,6 +1,7 @@
 package ru.skillsad.sad.service;
 
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,10 @@ public class ProdService {
     public void editProduct(Product product) {
         Product productFromDB = productRepo.findById(product.getId())
                 .orElseThrow(getNoSuchElementExceptionSupplier(product));
+
+        if (StringUtils.isNotBlank(product.getName()) || StringUtils.isNotBlank(product.getDescription())) {
+        }
+
 
         productFromDB.setName(product.getName());
         productFromDB.setDescription(product.getDescription());
