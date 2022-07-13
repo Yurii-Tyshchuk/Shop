@@ -14,7 +14,6 @@
                 <div class="phone">
                     <div class="phone-Back">
                         <a href="tel:89215741003" style="margin-bottom: 8px;">+7(921)574-10-03</a>
-                        <a href="tel:89213932386">+7(921)393-23-86</a>
                     </div>
                 </div>
         </div>
