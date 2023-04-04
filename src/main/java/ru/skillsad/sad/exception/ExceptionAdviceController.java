@@ -2,6 +2,7 @@ package ru.skillsad.sad.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -12,7 +13,6 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 @RestControllerAdvice
 public class ExceptionAdviceController {
@@ -22,13 +22,19 @@ public class ExceptionAdviceController {
      *
      * @return Json с параметром message в котором будет краткое описание ошибки
      */
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ResponseTemp> DBException(ConstraintViolationException e) {
+    @ExceptionHandler(TransactionSystemException.class)
+    public ResponseEntity<ResponseTemp> DBException(TransactionSystemException e) {
         StringBuilder message = new StringBuilder();
-        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
-        for (ConstraintViolation<?> violation : violations) {
-            message.append(violation.getMessage().concat(";"));
+        if (e.getRootCause() instanceof ConstraintViolationException) {
+            ConstraintViolationException exception = (ConstraintViolationException) e.getRootCause();
+
+            for (ConstraintViolation<?> violation : exception.getConstraintViolations()) {
+                message.append(violation.getMessage().concat(";"));
+            }
+        } else {
+            message.append("Ошибка, проверяй логи");
         }
+
         return new ResponseEntity<>(new ResponseTemp(message.toString()), HttpStatus.BAD_REQUEST);
     }
 
@@ -41,6 +47,7 @@ public class ExceptionAdviceController {
         StringBuilder stringBuilder = new StringBuilder();
         for (FieldError error : e.getBindingResult().getFieldErrors()) {
             stringBuilder.append(error.getDefaultMessage());
+            stringBuilder.append("\n");
         }
         return new ResponseEntity<>(new ResponseTemp(stringBuilder.toString()), HttpStatus.BAD_REQUEST);
     }

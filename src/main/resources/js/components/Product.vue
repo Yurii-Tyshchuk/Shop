@@ -4,13 +4,13 @@
         <div class="containerText">
             <div v-if="edit">
                 <input type="text" v-model="prodBody.name"/>
-                <input type="text" v-model="prodBody.description"/>
-                <input type="number" v-model="prodBody.rating"/>
+                <input placeholder="Описание продукта" type="text" v-model="prodBody.description"/>
+                <input placeholder="Баллы если требуются" type="number" v-model="prodBody.rating"/>
             </div>
             <div v-else>
                 <h2 class="TitleProd">{{prodBody.name}}</h2>
                 <span style="white-space: pre-line;">{{prodBody.description}}</span><br>
-                <span v-if="prodBody.rating != -1">Баллы: {{prodBody.rating /10}}</span><br>
+                <span v-if="prodBody.rating != ''">Баллы: {{prodBody.rating}}</span><br>
             </div>
             <div class="buttons">
                 <v-btn elevation="1"
@@ -56,7 +56,8 @@
                 profile: profile,
                 prodBody: '',
                 imgUrl: '',
-                edit: false
+                edit: false,
+                bufferProdBody: {}
             }
         },
         methods: {
@@ -64,12 +65,10 @@
                 let url = this.Output == 3 ? '/api/products/{id}' : '/api/product/{id}';
                 this.$resource(url).get({id: this.ProdId}).then(value => {
                         this.imgUrl = `${window.location.origin}/api/download${this.Output == 3 ? 's' : ''}/${this.ProdId}`;
-                        // this.imgUrl = URL.createObjectURL(new Blob([value.body.img], {type: "image/png"}));
-                        // this.imgUrl = value.body.img;
-                        // console.log(value.body.img);
                         if (value.body.description === 'NaNiiii') {
                             value.body.description = '';
                         }
+                        value.body.rating = value.body.rating == -1 ? '' : value.body.rating /= 10;
                         this.prodBody = value.body;
                     }, value => console.log(value.body)
                 )
@@ -78,7 +77,7 @@
                 document.getElementById("cCat").click();
             },
             deleteProduct() {
-                if (confirm("Вы уверены, что хотите удалить товара?")) {
+                if (confirm("Вы уверены, что хотите удалить товар?")) {
                     let url = this.Output == 3 ? '/security/deletes/{id}' : '/security/delete/{id}';
                     this.$resource(url).get({id: this.ProdId}).then(value => {
                         console.log(value.body);
@@ -94,15 +93,19 @@
                     this.$resource(url).save({}, {
                         id: this.prodBody.id,
                         name: this.prodBody.name,
-                        description: this.prodBody.description,
-                        rating: this.prodBody.rating
+                        description: !!this.prodBody.description ? this.prodBody.description : "NaNiiii",
+                        rating: !!this.prodBody.rating ? this.prodBody.rating * 10 : -1
                     }).then(value => {
                             console.log(value.body.message);
                             this.$emit('updateCatalog');
-                        }, value => console.log(value)
+                            this.edit = false;
+                        }, value => {
+                            this.prodBody = _.cloneDeep(this.bufferProdBody);
+                            alert(value.body.message);
+                        }
                     )
-                    this.edit = false;
                 } else {
+                    this.bufferProdBody = _.cloneDeep(this.prodBody);
                     this.edit = true;
                 }
             }
@@ -112,10 +115,12 @@
         },
         watch: {
             ProdId(old, newProps) {
+                this.edit = false;
                 this.getProduct();
             },
             ProdName(old, newProps) {
                 this.getProduct();
+                this.edit = false;
             }
         },
         computed: {

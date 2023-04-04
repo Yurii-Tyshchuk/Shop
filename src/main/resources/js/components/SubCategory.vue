@@ -42,11 +42,13 @@
                 subEdit: false,
                 subEditText: 'Редакт.',
                 addSub: false,
+                bufferSubCategoryName: ''
             }
         },
         methods: {
             editSubCategory(idFrom, nameFrom) {
                 if (!this.subEdit) {
+                    this.bufferSubCategoryName = nameFrom;
                     this.subEdit = true;
                     this.subEditText = 'Сохр.';
                 } else {
@@ -56,7 +58,10 @@
                         .then(value => {
                                 console.log(value.body.message);
                                 this.$emit('updateCatalog');
-                            }, value => console.log(value)
+                            }, value => {
+                                this.subCategory.name = _.clone(this.bufferSubCategoryName);
+                                alert(value.body.message);
+                            }
                         )
                 }
             },

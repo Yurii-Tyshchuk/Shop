@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /api/
+Disallow: /security/
+Disallow: /Fruits.png
+Disallow: /js/
+Disallow: /webjars/
+Disallow: /login
+Disallow: /webjars/
+

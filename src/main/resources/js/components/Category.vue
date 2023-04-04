@@ -74,7 +74,8 @@
                 editText: 'Редакт.',
                 btnNewSubCategory: 'Добавить подкатегорию',
                 btnNewProd: 'Добавить товар',
-                textNewSubCategory: ''
+                textNewSubCategory: '',
+                bufferCategoryName: ''
             }
         },
         methods: {
@@ -88,9 +89,13 @@
                     }).then(value => {
                             console.log(value.body.message);
                             this.$emit('updateCatalog');
-                        }, value => console.log(value)
+                        }, value => {
+                            this.category.name = _.clone(this.bufferCategoryName);
+                            alert(value.body.message);
+                        }
                     );
                 } else {
+                    this.bufferCategoryName = nameFrom;
                     this.edit = true;
                     this.editText = 'Сохр.';
                 }

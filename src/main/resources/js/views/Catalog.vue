@@ -38,7 +38,7 @@
             <!--    При первом выводе каталога   -->
             <div v-if="Output === 0">
                 <div class="box3">
-                    <div v-for="(CatObj,index) in CategoryList">
+                    <div v-for="(CatObj,index) in CategoryList" :key="CatObj.id">
                         <div v-if="CatObj.subCategoryList != ''">
                             <div v-if="CatObj.subCategoryList[0].products != ''">
                                 <SubCard :prod-id="CatObj.subCategoryList[0].products[0].id"
@@ -72,7 +72,9 @@
                         ></CreateCard>
                     </div>
                     <div v-for="Product in CategoryList[this.IDCat].subCategoryList[this.IDSubCat].products"
-                         v-if="Product">
+                         v-if="Product"
+                         :key="Product.id"
+                    >
                         <Product :prod-id="Product.id"
                                  :prod-name="Product.name"
                                  @updateCatalog="getTreeList"></Product>
@@ -82,7 +84,7 @@
             <!--    При нажатии на категорию, будет выводить подкат.    -->
             <div v-if="Output === 2">
                 <div class="box3">
-                    <div v-for="(subCategory,index) in CategoryList[this.IDCat].subCategoryList">
+                    <div v-for="(subCategory,index) in CategoryList[this.IDCat].subCategoryList" :key="subCategory.id">
                         <div v-if="subCategory.products != ''">
                             <SubCard :prod-id="subCategory.products[0].id"
                                      :cat-name="subCategory.name"
@@ -104,7 +106,7 @@
                                     @updateCatalog="getTreeList"
                         ></CreateCard>
                     </div>
-                    <div v-for="Product in CategoryList[this.IDCat].products">
+                    <div v-for="Product in CategoryList[this.IDCat].products" :key="Product.id">
                         <Product :prod-id="Product.id"
                                  :prod-name="Product.name"
                                  @updateCatalog="getTreeList"></Product>
@@ -182,12 +184,13 @@
                             })
                             for (let i = 0; i < this.CategoryList.length; i++) {
                                 this.CategoryList[i].subCategoryList.sort(compare);
+                                this.CategoryList[i].products.sort(compare);
 
                                 for (let j = 0; j < this.CategoryList[i].subCategoryList.length; j++) {
                                     this.CategoryList[i].subCategoryList[j].products.sort(compare);
                                 }
                             }
-                            console.log(this.CategoryList)
+                            // this.CategoryList.forEach(value => console.log(value));
                         }
                     });
             },
